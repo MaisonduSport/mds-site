@@ -8,44 +8,66 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+  /* Reset & Base */
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { width:100%; height:100%; font-family:'Montserrat', sans-serif; background:#000; color:#fff; overflow:hidden; }
 
   body.allow-scroll { overflow-y:auto; }
 
-  /* Top right corner MDS */
+  /* Top-right MDS letters */
   .mds-corner {
     position: fixed;
     top:20px; right:30px;
     font-family:'Playfair Display', serif;
     font-size:2rem; font-weight:700;
     color:#fff; opacity:0;
-    z-index:1000; transition:opacity 1s ease;
-    display:flex; gap: 4px;
+    z-index:1000;
+    display:flex; gap:4px;
+    transition: all 1s ease;
   }
+
   .mds-corner.visible { opacity:1; }
 
   /* Hero Section */
   .hero {
-    height:100vh; display:flex;
-    flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; overflow:hidden;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
   }
+
   .hero h1 {
     font-family:'Playfair Display', serif;
-    font-size:6rem; letter-spacing:5px;
-    color:#fff; margin-bottom:1rem; opacity:1;
+    font-size:6rem;
+    letter-spacing:5px;
+    color:#fff;
+    margin-bottom:1rem;
+    opacity:1;
+    transition: all 0.8s ease;
   }
+
   .hero h2 {
-    font-size:2.5rem; letter-spacing:3px;
-    color:#fff; opacity:1;
+    font-size:2.5rem;
+    letter-spacing:3px;
+    color:#fff;
+    opacity:1;
+    transition: all 0.8s ease;
   }
+
   .enter-button {
-    margin-top:3rem; padding:1rem 3rem;
-    font-size:1.2rem; border:2px solid #fff;
-    background:transparent; color:#fff;
-    cursor:pointer; transition:all 0.3s ease;
+    margin-top:3rem;
+    padding:1rem 3rem;
+    font-size:1.2rem;
+    border:2px solid #fff;
+    background:transparent;
+    color:#fff;
+    cursor:pointer;
+    transition: all 0.3s ease;
   }
+
   .enter-button:hover {
     background:#fff; color:#000;
     box-shadow:0 8px 20px rgba(255,255,255,0.2);
@@ -59,17 +81,21 @@
     font-weight:700;
     color:#fff;
     margin-bottom:2rem;
-    opacity:0; transform:translateY(20px);
+    opacity:0;
+    transform:translateY(20px);
     transition: all 0.8s ease;
   }
 
-  /* Shop grid */
+  /* Shop Grid */
   .shop {
     padding:4rem; display:grid;
     grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-    gap:2.5rem; opacity:0; transform:translateY(40px);
+    gap:2.5rem;
+    opacity:0; transform:translateY(40px);
     pointer-events:none;
+    transition: all 0.8s ease;
   }
+
   .item {
     background:#111; border-radius:14px;
     text-align:center; padding:1.2rem;
@@ -77,18 +103,22 @@
     text-decoration:none; color:#fff;
     display:flex; flex-direction:column; gap:12px;
   }
+
   .item:hover {
     transform:translateY(-10px) scale(1.02);
     box-shadow:0 12px 30px rgba(255,255,255,0.2);
   }
+
   .item img {
     width:100%; height:280px;
     object-fit:cover; border-radius:10px;
   }
+
   .item h3 {
     font-family:'Playfair Display', serif;
     font-size:1.5rem; font-weight:700;
   }
+
   .item p {
     font-size:1.2rem; font-weight:600;
   }
@@ -98,11 +128,12 @@
     padding:2rem; text-align:center;
     font-size:0.9rem; color:#fff;
   }
+
 </style>
 </head>
 <body>
 
-<!-- floating cursor -->
+<!-- Top-right MDS letters -->
 <div class="mds-corner" id="mdsCorner">M D S</div>
 
 <!-- Hero -->
@@ -112,11 +143,12 @@
   <button class="enter-button" id="enter">Enter Maison</button>
 </div>
 
-<!-- Store Content -->
+<!-- Store Intro -->
 <div class="products-intro" id="productsIntro">
   The Maison — Where Football Meets Elegance
 </div>
 
+<!-- Shop Section -->
 <section class="shop" id="shop">
   <a href="product1.html" class="item">
     <img src="shirt1.png" alt="Premium Shirt">
@@ -147,29 +179,35 @@ const enterBtn = document.getElementById('enter');
 const mdsCorner = document.getElementById('mdsCorner');
 const productsIntro = document.getElementById('productsIntro');
 const shop = document.getElementById('shop');
+const welcomeText = document.getElementById('welcome');
+const maisonText = document.getElementById('maison');
 
 enterBtn.addEventListener('click', () => {
-  // show MDS letters in corner
+  // Animate MDS letters to top-right
   mdsCorner.classList.add('visible');
 
-  // hero fade
-  document.getElementById('welcome').style.opacity = 0;
-  document.getElementById('maison').style.opacity = 0;
+  // Hide hero texts
+  welcomeText.style.opacity = 0;
+  maisonText.style.opacity = 0;
   enterBtn.style.opacity = 0;
 
-  // reveal products intro and shop
-  setTimeout(() => {
-    productsIntro.style.opacity = 1;
-    shop.style.pointerEvents = 'auto';
-    shop.style.opacity = 1;
-    shop.style.transform = 'translateY(0)';
-    document.body.classList.add('allow-scroll');
-  }, 1000);
+  // Show products intro and shop
+  productsIntro.style.opacity = 1;
+  shop.style.pointerEvents = 'auto';
+  shop.style.opacity = 1;
+  shop.style.transform = 'translateY(0)';
+
+  // allow scrolling through products
+  document.body.classList.add('allow-scroll');
+
+  // instant jump to products section
+  productsIntro.scrollIntoView({behavior: 'smooth'});
 });
 </script>
 
 </body>
 </html>
+
 
 
 
