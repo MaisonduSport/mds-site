@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Maison du Sport</title>
 
@@ -9,72 +9,138 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Playfair Display',serif;}
 body{background:#000;color:#fff;overflow-x:hidden}
 
-/* INTRO */
+/* INTRO SCREEN */
 .intro{
-position:fixed;width:100%;height:100vh;
-display:flex;flex-direction:column;justify-content:center;align-items:center;
-background:black;z-index:10;text-align:center
+position:fixed;
+width:100%;height:100vh;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+background:black;
+z-index:10;
+overflow:hidden;
 }
+
 .intro::before{
-content:"";position:absolute;width:700px;height:700px;
+content:"";
+position:absolute;
+width:600px;height:600px;
 background:url("MDS-file.png") center/contain no-repeat;
-opacity:.12;
+opacity:0.12;
 }
-.intro h1{font-size:3rem}
-.intro h2{font-weight:300;margin-top:10px}
+
+.intro h1{font-size:3rem;letter-spacing:2px;}
+.intro h2{font-size:1.2rem;font-weight:300;margin-top:10px;}
+
 .enter-btn{
-margin-top:40px;padding:12px 40px;
-border:1px solid gold;background:none;color:gold;cursor:pointer
+margin-top:40px;
+padding:12px 40px;
+background:none;border:1px solid gold;
+color:gold;font-size:1rem;
+cursor:pointer;transition:.3s;
 }
+.enter-btn:hover{background:gold;color:black}
 
-/* CORNER LOGO */
+/* TOP RIGHT SMALL LOGO */
 .corner-logo{
-position:fixed;top:20px;right:30px;width:80px;
-opacity:0;transition:1s;z-index:5
+position:fixed;
+top:20px;right:30px;
+width:70px;
+opacity:0;
+transition:1s;
+z-index:5;
 }
 
-/* SHOP */
-.shop{display:none;background:#3b1f16;min-height:100vh;padding-top:120px}
-.tagline{text-align:center;color:gold;font-size:1.4rem;margin-bottom:40px}
+/* SHOP AREA */
+.shop{
+display:none;
+background:#3b1f16; /* dark sienna */
+min-height:100vh;
+padding-top:120px;
+}
 
+/* TAGLINE */
+.tagline{
+text-align:center;
+color:gold;
+font-size:1.4rem;
+margin-bottom:40px;
+}
+
+/* PRODUCT GRID */
 .products{
-display:grid;grid-template-columns:repeat(2,1fr);
-gap:30px;max-width:800px;margin:auto;padding-bottom:100px
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+max-width:800px;
+margin:auto;
+padding-bottom:100px;
 }
 
-.card{text-align:center;cursor:pointer;position:relative}
-.card::before{
-content:"";position:absolute;width:100%;height:100%;
-background:#4b2a20;clip-path:polygon(50% 0%,100% 100%,0% 100%);
-z-index:-1;border-radius:10px
+/* TRIANGLE CARDS */
+.card{
+text-align:center;
+cursor:pointer;
+position:relative;
+transition:.4s;
 }
-.card img{width:120px;height:120px;object-fit:cover;margin-top:35px;border-radius:8px}
-.card h3{margin-top:10px}
-.card p{color:gold}
+.card::before{
+content:"";
+position:absolute;
+width:100%;height:100%;
+background:#4b2a20;
+clip-path:polygon(50% 0%,100% 100%,0% 100%);
+z-index:-1;border-radius:10px;
+}
+.card img{
+width:120px;height:120px;
+object-fit:cover;
+margin-top:35px;border-radius:8px;
+}
+.card h3{margin-top:10px;font-size:.95rem}
+.card p{color:gold;font-size:.9rem}
 
 /* PRODUCT PAGE */
-.product-page{display:none;padding:120px 40px;background:#3b1f16;min-height:100vh}
-.product-container{display:flex;gap:60px;justify-content:center;align-items:center}
-.product-container img{width:320px;border-radius:10px}
-.product-info select,.product-info input{
-padding:8px;margin:10px 0;background:black;color:white;border:1px solid gold
+.product-page{
+display:none;
+padding:120px 40px;
+background:#3b1f16;
+min-height:100vh;
 }
-button{padding:10px 30px;border:1px solid gold;background:none;color:gold;cursor:pointer}
 
-/* CART */
-.cart{
-position:fixed;right:-100%;top:0;width:350px;height:100vh;
-background:black;padding:25px;transition:.5s;z-index:20;overflow:auto
+.product-container{
+display:flex;gap:60px;justify-content:center;align-items:center;
 }
-.cart.open{right:0}
-.cart h2{color:gold;margin-bottom:15px}
+
+.product-container img{width:320px;border-radius:10px}
+
+.product-info h2{color:gold;margin-bottom:15px}
+.product-info p{margin-bottom:20px}
+
+button{
+padding:10px 30px;
+border:1px solid gold;
+background:none;color:gold;
+cursor:pointer;margin-right:10px
+}
+
+/* CART PANEL */
+.cart{
+position:fixed;
+right:-100%;top:0;
+width:320px;height:100vh;
+background:black;color:white;
+padding:30px;transition:.5s;
+z-index:20;
+}
+.cart h2{color:gold;margin-bottom:20px}
 .cart-item{margin-bottom:10px}
-.checkout{display:none;margin-top:20px}
-input{width:100%;padding:10px;margin:5px 0;background:#111;color:white;border:1px solid gold}
+.cart.open{right:0}
+
 </style>
 </head>
 <body>
 
+<!-- INTRO -->
 <div class="intro" id="intro">
 <h1>Welcome to Maison du Sport</h1>
 <h2>Where Elegance Meets Football</h2>
@@ -83,106 +149,77 @@ input{width:100%;padding:10px;margin:5px 0;background:#111;color:white;border:1p
 
 <img src="Maisondusport-file.png" class="corner-logo" id="cornerLogo"/>
 
+<!-- SHOP -->
 <div class="shop" id="shop">
 <div class="tagline">A place where football meets elegance</div>
+
 <div class="products">
 <div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg"><h3>Maison Signature</h3><p>$20</p>
+<img src="shirt-file.png.jpeg">
+<h3>Maison Signature</h3><p>$20</p>
 </div>
+
 <div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg"><h3>Elite Match Tee</h3><p>$20</p>
+<img src="shirt-file.png.jpeg">
+<h3>Elite Match Tee</h3><p>$20</p>
 </div>
+
 <div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg"><h3>Football Luxe</h3><p>$20</p>
+<img src="shirt-file.png.jpeg">
+<h3>Football Luxe</h3><p>$20</p>
 </div>
+
 <div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg"><h3>Minimal Pro Fit</h3><p>$20</p>
+<img src="shirt-file.png.jpeg">
+<h3>Minimal Pro Fit</h3><p>$20</p>
 </div>
 </div>
 </div>
 
+<!-- PRODUCT PAGE -->
 <div class="product-page" id="productPage">
 <div class="product-container">
 <img src="shirt-file.png.jpeg">
 <div class="product-info">
 <h2>Maison Signature Shirt</h2>
-<p>Luxury football inspired material.</p>
+<p>Premium football-inspired luxury fabric.</p>
 <h3 style="color:gold">$20</h3>
-
-<label>Size</label>
-<select id="size">
-<option>S</option><option>M</option><option>L</option><option>XL</option>
-</select>
-
-<label>Quantity</label>
-<input type="number" id="qty" value="1" min="1">
-
-<br>
 <button onclick="addToCart()">Add to Cart</button>
-<button onclick="toggleCart()">Cart</button>
-<button onclick="backToShop()">Back</button>
+<button onclick="toggleCart()">Buy Now</button>
 </div>
 </div>
 </div>
 
+<!-- CART -->
 <div class="cart" id="cart">
 <h2>Your Cart</h2>
 <div id="cartItems"></div>
-<h3>Total: $<span id="total">0</span></h3>
-<button onclick="showCheckout()">Checkout</button>
-
-<div class="checkout" id="checkout">
-<h3 style="color:gold">Checkout</h3>
-<input placeholder="Full Name">
-<input placeholder="Phone Number">
-<input placeholder="Delivery Address">
-<button onclick="alert('Payment gateway (MonCash) connects here')">Pay Now</button>
-</div>
+<button onclick="alert('Checkout system coming next')">Buy Now</button>
 </div>
 
 <script>
-let total=0;
-
 function enterMaison(){
-intro.style.display="none";
-shop.style.display="block";
-cornerLogo.style.opacity="1";
+document.getElementById("intro").style.display="none";
+document.getElementById("shop").style.display="block";
+document.getElementById("cornerLogo").style.opacity="1";
 }
 
 function openProduct(){
-shop.style.display="none";
-productPage.style.display="block";
-}
-
-function backToShop(){
-productPage.style.display="none";
-shop.style.display="block";
+document.getElementById("shop").style.display="none";
+document.getElementById("productPage").style.display="block";
 }
 
 function addToCart(){
-let size=document.getElementById("size").value;
-let qty=parseInt(document.getElementById("qty").value);
-let price=20*qty;
-total+=price;
-document.getElementById("total").textContent=total;
-
-let item=document.createElement("div");
+const item=document.createElement("div");
 item.className="cart-item";
-item.textContent=`Shirt (${size}) x${qty} - $${price}`;
-cartItems.appendChild(item);
+item.textContent="Maison Signature Shirt - $20";
+document.getElementById("cartItems").appendChild(item);
 }
 
-function toggleCart(){cart.classList.toggle("open")}
-function showCheckout(){checkout.style.display="block"}
+function toggleCart(){
+document.getElementById("cart").classList.toggle("open");
+}
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
