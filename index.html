@@ -1,226 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maison du Sport</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Playfair Display',serif;}
-body{background:#000;color:#fff;overflow-x:hidden}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Montserrat,sans-serif;background:#000;color:white;overflow:hidden}
+h1,h2,h3{font-family:'Playfair Display',serif}
 
-/* INTRO SCREEN */
+/* INTRO */
 .intro{
-position:fixed;
-width:100%;height:100vh;
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-background:black;
-z-index:10;
-overflow:hidden;
+height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;background:#000;
 }
-
 .intro::before{
-content:"";
-position:absolute;
-width:600px;height:600px;
-background:url("MDS-file.png") center/contain no-repeat;
-opacity:0.12;
+content:"";position:absolute;inset:0;background:url("MDS-file.png") center/contain no-repeat;opacity:0.12;
 }
-
-.intro h1{font-size:3rem;letter-spacing:2px;}
-.intro h2{font-size:1.2rem;font-weight:300;margin-top:10px;}
-
+.intro h1{font-size:4rem;z-index:2}
 .enter-btn{
-margin-top:40px;
-padding:12px 40px;
-background:none;border:1px solid gold;
-color:gold;font-size:1rem;
-cursor:pointer;transition:.3s;
-}
-.enter-btn:hover{background:gold;color:black}
-
-/* TOP RIGHT SMALL LOGO */
-.corner-logo{
-position:fixed;
-top:20px;right:30px;
-width:70px;
-opacity:0;
-transition:1s;
-z-index:5;
+margin-top:2rem;padding:1rem 3rem;border:2px solid gold;background:none;color:gold;font-size:1.2rem;cursor:pointer;z-index:2
 }
 
-/* SHOP AREA */
-.shop{
-display:none;
-background:#3b1f16; /* dark sienna */
-min-height:100vh;
-padding-top:120px;
-}
-
-/* TAGLINE */
-.tagline{
-text-align:center;
-color:gold;
-font-size:1.4rem;
-margin-bottom:40px;
-}
-
-/* PRODUCT GRID */
-.products{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:30px;
-max-width:800px;
-margin:auto;
-padding-bottom:100px;
-}
-
-/* TRIANGLE CARDS */
-.card{
-text-align:center;
-cursor:pointer;
-position:relative;
-transition:.4s;
-}
-.card::before{
-content:"";
-position:absolute;
-width:100%;height:100%;
-background:#4b2a20;
-clip-path:polygon(50% 0%,100% 100%,0% 100%);
-z-index:-1;border-radius:10px;
-}
-.card img{
-width:120px;height:120px;
-object-fit:cover;
-margin-top:35px;border-radius:8px;
-}
-.card h3{margin-top:10px;font-size:.95rem}
-.card p{color:gold;font-size:.9rem}
+/* MAIN STORE */
+.store{display:none;background:#3e2723;color:gold;min-height:100vh;padding:2rem}
+.top-logo{position:fixed;top:15px;right:25px;width:60px}
+.statement{text-align:center;margin-top:80px;font-size:2rem}
+.products{margin-top:60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px}
+.card{background:#4e342e;padding:20px;border-radius:14px;text-align:center;cursor:pointer;transition:.3s}
+.card:hover{transform:scale(1.05)}
+.card img{width:100%;border-radius:12px}
 
 /* PRODUCT PAGE */
-.product-page{
-display:none;
-padding:120px 40px;
-background:#3b1f16;
-min-height:100vh;
-}
+.product-page{display:none;background:#3e2723;color:gold;min-height:100vh;padding:40px}
+.product-container{display:flex;gap:40px;flex-wrap:wrap}
+.product-container img{width:400px;border-radius:12px}
+button{padding:12px 25px;background:gold;color:#3e2723;border:none;margin-top:15px;cursor:pointer}
 
-.product-container{
-display:flex;gap:60px;justify-content:center;align-items:center;
-}
+/* CART */
+.cart-page{display:none;background:#3e2723;color:gold;min-height:100vh;padding:40px}
 
-.product-container img{width:320px;border-radius:10px}
-
-.product-info h2{color:gold;margin-bottom:15px}
-.product-info p{margin-bottom:20px}
-
-button{
-padding:10px 30px;
-border:1px solid gold;
-background:none;color:gold;
-cursor:pointer;margin-right:10px
-}
-
-/* CART PANEL */
-.cart{
-position:fixed;
-right:-100%;top:0;
-width:320px;height:100vh;
-background:black;color:white;
-padding:30px;transition:.5s;
-z-index:20;
-}
-.cart h2{color:gold;margin-bottom:20px}
-.cart-item{margin-bottom:10px}
-.cart.open{right:0}
-
+.contact{text-align:center;margin-top:80px}
 </style>
 </head>
+
 <body>
 
 <!-- INTRO -->
-<div class="intro" id="intro">
+<section class="intro" id="intro">
 <h1>Welcome to Maison du Sport</h1>
-<h2>Where Elegance Meets Football</h2>
 <button class="enter-btn" onclick="enterMaison()">Enter the Maison</button>
-</div>
+</section>
 
-<img src="Maisondusport-file.png" class="corner-logo" id="cornerLogo"/>
+<!-- STORE -->
+<section class="store" id="store">
+<img src="Maisondusport-file.png" class="top-logo">
 
-<!-- SHOP -->
-<div class="shop" id="shop">
-<div class="tagline">A place where football meets elegance</div>
+<div class="statement">A place where football meets elegance</div>
 
 <div class="products">
 <div class="card" onclick="openProduct()">
 <img src="shirt-file.png.jpeg">
-<h3>Maison Signature</h3><p>$20</p>
-</div>
-
-<div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg">
-<h3>Elite Match Tee</h3><p>$20</p>
-</div>
-
-<div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg">
-<h3>Football Luxe</h3><p>$20</p>
-</div>
-
-<div class="card" onclick="openProduct()">
-<img src="shirt-file.png.jpeg">
-<h3>Minimal Pro Fit</h3><p>$20</p>
-</div>
+<h3>Luxury Match Jersey</h3>
+<p>$40</p>
 </div>
 </div>
 
-<!-- PRODUCT PAGE -->
-<div class="product-page" id="productPage">
+<div class="contact">
+<h2>Contact Maison du Sport</h2>
+<p>Email: contact@maisondusport.com</p>
+</div>
+</section>
+
+<!-- PRODUCT VIEW -->
+<section class="product-page" id="productPage">
+<button onclick="goStore()">← Back to Store</button>
+<h1>Luxury Match Jersey</h1>
 <div class="product-container">
 <img src="shirt-file.png.jpeg">
-<div class="product-info">
-<h2>Maison Signature Shirt</h2>
-<p>Premium football-inspired luxury fabric.</p>
-<h3 style="color:gold">$20</h3>
+<div>
+<h2>$40</h2>
+<p>Premium football elegance jersey designed for performance and luxury presence.</p>
 <button onclick="addToCart()">Add to Cart</button>
-<button onclick="toggleCart()">Buy Now</button>
+<button onclick="goCart()">Buy Now</button>
 </div>
 </div>
-</div>
+</section>
 
 <!-- CART -->
-<div class="cart" id="cart">
-<h2>Your Cart</h2>
+<section class="cart-page" id="cartPage">
+<button onclick="goStore()">← Continue Shopping</button>
+<h1>Your Cart</h1>
 <div id="cartItems"></div>
-<button onclick="alert('Checkout system coming next')">Buy Now</button>
-</div>
+<button onclick="buy()">Buy Now</button>
+</section>
 
 <script>
 function enterMaison(){
 document.getElementById("intro").style.display="none";
-document.getElementById("shop").style.display="block";
-document.getElementById("cornerLogo").style.opacity="1";
+document.body.style.overflow="auto";
+document.getElementById("store").style.display="block";
 }
 
 function openProduct(){
-document.getElementById("shop").style.display="none";
+document.getElementById("store").style.display="none";
 document.getElementById("productPage").style.display="block";
 }
 
-function addToCart(){
-const item=document.createElement("div");
-item.className="cart-item";
-item.textContent="Maison Signature Shirt - $20";
-document.getElementById("cartItems").appendChild(item);
+function goStore(){
+document.getElementById("productPage").style.display="none";
+document.getElementById("cartPage").style.display="none";
+document.getElementById("store").style.display="block";
 }
 
-function toggleCart(){
-document.getElementById("cart").classList.toggle("open");
+function goCart(){
+document.getElementById("productPage").style.display="none";
+document.getElementById("cartPage").style.display="block";
+renderCart();
+}
+
+function addToCart(){
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+cart.push("Luxury Match Jersey - $40");
+localStorage.setItem("cart", JSON.stringify(cart));
+alert("Added to cart!");
+}
+
+function renderCart(){
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let container = document.getElementById("cartItems");
+container.innerHTML="";
+cart.forEach(item=>{
+let p=document.createElement("p");
+p.innerText=item;
+container.appendChild(p);
+});
+}
+
+function buy(){
+alert("Order placed! Payment system comes next.");
+localStorage.removeItem("cart");
+renderCart();
 }
 </script>
 
 </body>
 </html>
+
 
