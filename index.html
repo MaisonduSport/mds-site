@@ -26,14 +26,6 @@ color:white;
 position:relative;
 }
 
-.intro::before{
-content:"";
-position:absolute;
-inset:0;
-background:url("MDS-file.png") center/contain no-repeat;
-opacity:0.15;
-}
-
 .intro h1{font-size:4rem;z-index:2}
 .enter-btn{
 margin-top:2rem;
@@ -74,13 +66,13 @@ font-size:2rem;
 .products{
 margin-top:60px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:40px;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); /* smaller cards */
+gap:30px;
 }
 
 .card{
 background:#4e342e;
-padding:20px;
+padding:15px; /* smaller padding */
 border-radius:14px;
 text-align:center;
 cursor:pointer;
@@ -121,6 +113,21 @@ font-size:1.1rem;
 <h3>Luxury Match Jersey</h3>
 <p>$40</p>
 </div>
+<div class="card" onclick="openProduct()">
+<img src="shirt-file.png.jpeg">
+<h3>Elite Training Tee</h3>
+<p>$35</p>
+</div>
+<div class="card" onclick="openProduct()">
+<img src="shirt-file.png.jpeg">
+<h3>Football Luxe</h3>
+<p>$50</p>
+</div>
+<div class="card" onclick="openProduct()">
+<img src="shirt-file.png.jpeg">
+<h3>Minimal Pro Fit</h3>
+<p>$30</p>
+</div>
 </div>
 
 <div class="contact">
@@ -145,6 +152,7 @@ window.location.href="product.html";
 
 </body>
 </html>
+
 
 
 
