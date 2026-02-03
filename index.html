@@ -9,50 +9,58 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif; }
     html, body { height: 100%; width: 100%; overflow-x: hidden; background: #fdfaf5; color: #000; }
 
+    /* Top-right logo */
+    .top-logo {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      width: 120px; /* elegant small size */
+      z-index: 1000;
+      transition: all 0.5s ease;
+    }
+
     /* Hero Section */
     .hero {
       height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, #fdfaf5 0%, #f7f4ef 100%);
       position: relative;
+      background: linear-gradient(135deg, #fdfaf5 0%, #f7f4ef 100%);
+      overflow: hidden;
     }
 
-    /* Logo Styling */
-    .logo {
-      font-size: 5rem;
-      font-weight: 900;
-      letter-spacing: 0.3rem;
-      color: #bfa35f; /* Rich gold */
-      text-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(50px);
+    /* Blurred background logo */
+    .logo-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; /* maximum size for cinematic hero */
+      max-width: 80%;
+      opacity: 0.25;
+      filter: blur(10px);
       transition: all 1.5s ease-out;
-      background: linear-gradient(90deg, #d4af37, #bfa35f);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
     }
 
-    .logo.visible { opacity: 1; transform: translateY(0); }
-
-    /* Enter Button */
+    /* Enter button */
     .enter-button {
-      margin-top: 3rem;
       padding: 1rem 2.5rem;
       font-size: 1.2rem;
       border: 2px solid #bfa35f;
       background: transparent;
       color: #bfa35f;
       cursor: pointer;
+      z-index: 10;
       opacity: 0;
       transform: translateY(20px);
       transition: all 1s ease-out 1.2s;
     }
 
-    .enter-button.visible { opacity: 1; transform: translateY(0); }
+    .enter-button.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .enter-button:hover {
       background: #bfa35f;
@@ -67,6 +75,7 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 2.5rem;
       background: #f7f4ef;
+      position: relative;
     }
 
     .item {
@@ -78,7 +87,10 @@
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .item:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+    .item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
 
     .item img { width: 100%; border-radius: 12px; }
 
@@ -97,11 +109,9 @@
   </style>
 </head>
 <body>
-  <!-- Hero Section -->
-  <div class="hero">
-   <body>
+
   <!-- Top-right fixed logo -->
-  <img src="logo.png" alt="Maison du Sport" class="top-logo" id="topLogo">
+  <img src="MDS-file.png" alt="Maison du Sport" class="top-logo">
 
   <!-- Hero Section -->
   <div class="hero">
@@ -116,10 +126,20 @@
       <h3>Premium Shirt</h3>
       <p>$20</p>
     </div>
-    <!-- Add more items as needed -->
-  </section>
-</body>
-
+    <div class="item">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+2" alt="Shirt 2">
+      <h3>Classic Tee</h3>
+      <p>$20</p>
+    </div>
+    <div class="item">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+3" alt="Shirt 3">
+      <h3>Sport Jersey</h3>
+      <p>$20</p>
+    </div>
+    <div class="item">
+      <img src="https://via.placeholder.com/220x220.png?text=Shirt+4" alt="Shirt 4">
+      <h3>Minimal Top</h3>
+      <p>$20</p>
     </div>
   </section>
 
@@ -129,13 +149,12 @@
   </footer>
 
   <script>
-    // Hero fade-in animation
+    // Animate hero
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => document.getElementById('logo').classList.add('visible'), 200);
-      setTimeout(() => document.getElementById('enter').classList.add('visible'), 1200);
-
-      // Scroll to shop section when entering
       const enterBtn = document.getElementById('enter');
+      setTimeout(() => enterBtn.classList.add('visible'), 500);
+
+      // Scroll to shop section
       enterBtn.addEventListener('click', () => {
         document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
       });
