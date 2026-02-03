@@ -89,6 +89,47 @@ text-align:center;
 font-size:1.1rem;
 }
 
+/* PRODUCT PAGE */
+.product-page{
+display:none;
+background:#3e2723;
+color:gold;
+min-height:100vh;
+padding:2rem;
+text-align:center;
+}
+
+.product-page img{
+width:300px;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+.product-page button{
+padding:10px 30px;
+border:1px solid gold;
+background:none;
+color:gold;
+cursor:pointer;
+margin-right:10px;
+}
+
+/* CART PANEL */
+.cart{
+position:fixed;
+right:-100%;
+top:0;
+width:320px;
+height:100vh;
+background:#000;
+color:white;
+padding:30px;
+transition:.5s;
+z-index:20;
+}
+.cart h2{color:gold;margin-bottom:20px}
+.cart-item{margin-bottom:10px}
+.cart.open{right:0}
 </style>
 </head>
 
@@ -137,6 +178,29 @@ font-size:1.1rem;
 
 </section>
 
+<!-- PRODUCT PAGE -->
+<section class="product-page" id="productPage">
+<img id="productImg" src="shirt-file.png.jpeg">
+<h2 id="productName">Luxury Match Jersey</h2>
+<p id="productDesc">Premium football-inspired luxury fabric for elegance and performance.</p>
+<h3 id="productPrice">$40</h3>
+
+<div style="margin:20px 0;">
+Quantity: <input type="number" id="quantity" value="1" min="1" style="width:60px;padding:5px;">
+</div>
+
+<button onclick="addToCart()">Add to Cart</button>
+<button onclick="toggleCart()">Buy Now</button>
+</section>
+
+<!-- CART PANEL -->
+<div class="cart" id="cart">
+<h2>Your Cart</h2>
+<div id="cartItems"></div>
+<div style="margin-top:20px;font-weight:bold;" id="cartTotal">Total: $0</div>
+<button onclick="checkout()">Proceed to Checkout</button>
+</div>
+
 <script>
 function enterSite(){
 document.getElementById("intro").style.display="none";
@@ -144,14 +208,64 @@ document.body.style.overflow="auto";
 document.getElementById("site").style.display="block";
 }
 
+// Product Data
+const productData = {
+  name: "Luxury Match Jersey",
+  price: 40,
+  image: "shirt-file.png.jpeg",
+  desc: "Premium football-inspired luxury fabric for elegance and performance."
+};
+
+// Open product page
 function openProduct(){
-localStorage.setItem("product","Luxury Match Jersey");
-window.location.href="product.html";
+document.getElementById("site").style.display="none";
+document.getElementById("productPage").style.display="block";
+
+// Fill product info
+document.getElementById("productImg").src = productData.image;
+document.getElementById("productName").textContent = productData.name;
+document.getElementById("productDesc").textContent = productData.desc;
+document.getElementById("productPrice").textContent = "$" + productData.price;
+}
+
+// CART LOGIC
+let cart = [];
+
+function addToCart(){
+  const qty = parseInt(document.getElementById("quantity").value);
+  const item = {...productData, quantity: qty};
+  cart.push(item);
+  updateCart();
+  alert("Added to cart!");
+}
+
+function updateCart(){
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+  let total = 0;
+  cart.forEach(item=>{
+    const div = document.createElement("div");
+    div.className="cart-item";
+    div.textContent = `${item.name} x${item.quantity} - $${item.price*item.quantity}`;
+    cartItems.appendChild(div);
+    total += item.price*item.quantity;
+  });
+  document.getElementById("cartTotal").textContent="Total: $"+total;
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("open");
+}
+
+function checkout(){
+if(cart.length===0){alert("Your cart is empty!");return;}
+alert("Checkout system coming next. Total: $" + cart.reduce((acc,i)=>acc + i.price*i.quantity,0));
 }
 </script>
 
 </body>
 </html>
+l>
 
 
 
