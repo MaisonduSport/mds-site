@@ -9,10 +9,10 @@
 
 <style>
 * {margin:0;padding:0;box-sizing:border-box}
-body {font-family:Montserrat, sans-serif; overflow:hidden;}
+body {font-family:Montserrat, sans-serif; overflow:hidden; background:#3e2723;}
 h1,h2,h3 {font-family:'Playfair Display', serif}
 
-/* ================= INTRO CINEMATIC ================= */
+/* ================= INTRO ================= */
 .intro {
 height:100vh;
 display:flex;
@@ -25,7 +25,6 @@ position:relative;
 overflow:hidden;
 }
 
-/* 🔥 BACKGROUND IMAGE */
 .intro::before{
 content:"";
 position:absolute;
@@ -40,7 +39,6 @@ from{transform:scale(1)}
 to{transform:scale(1.15)}
 }
 
-/* DARK OVERLAY */
 .intro::after{
 content:"";
 position:absolute;
@@ -49,7 +47,6 @@ background:linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
 z-index:-2;
 }
 
-/* ✨ MOVING LIGHT SWEEP */
 .light-sweep{
 position:absolute;
 top:0;
@@ -61,11 +58,8 @@ animation:sweep 6s infinite;
 z-index:-1;
 }
 
-@keyframes sweep{
-to{left:120%}
-}
+@keyframes sweep{to{left:120%}}
 
-/* 🖼 LEFT SIDE IMAGE BIGGER */
 .left-art{
 position:absolute;
 left:0;
@@ -81,7 +75,6 @@ animation: floatArt 6s ease-in-out infinite;
 100%{transform:translateY(0)}
 }
 
-/* TEXT GLOW */
 .intro h1{
 font-size:4rem;
 background: linear-gradient(45deg, #ffd700, #fff8dc, #ffd700);
@@ -98,13 +91,6 @@ animation: shimmer 3s infinite;
 100%{background-position:400px 0}
 }
 
-.intro h2{
-margin-top:15px;
-color:rgba(255,215,0,0.85);
-animation:fadeIn 2s forwards 1s;
-opacity:0;
-}
-
 .enter-btn{
 margin-top:2rem;
 padding:1rem 3rem;
@@ -116,19 +102,12 @@ cursor:pointer;
 animation:fadeIn 2s forwards 1.5s, pulseGlow 2s infinite 3s;
 }
 
-@keyframes pulseGlow{
-50%{box-shadow:0 0 20px gold}
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
+@keyframes pulseGlow{50%{box-shadow:0 0 20px gold}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)}}
 
 /* ================= MAIN SITE ================= */
 .site{
 display:none;
-background:#3e2723;
 color:gold;
 min-height:100vh;
 padding:2rem;
@@ -152,13 +131,27 @@ filter: drop-shadow(0 0 12px gold);
 margin-top:80px;
 text-align:center;
 font-size:2rem;
+letter-spacing:2px;
 }
 
+/* ===== SHOWROOM NOTICE ===== */
+.showroom-banner{
+margin-top:40px;
+text-align:center;
+padding:15px;
+border:1px solid gold;
+background:rgba(0,0,0,0.4);
+font-size:1.1rem;
+letter-spacing:1px;
+}
+
+/* ===== PRODUCTS (VIEW ONLY) ===== */
 .products{
 margin-top:60px;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:30px;
+pointer-events:none; /* DISABLE CLICKING */
 }
 
 .card{
@@ -166,17 +159,64 @@ background:#4e342e;
 padding:15px;
 border-radius:14px;
 text-align:center;
-cursor:pointer;
 transition:.3s;
+position:relative;
 }
 
 .card:hover{transform:scale(1.05)}
 .card img{width:100%;border-radius:12px}
 
-.contact{
-margin-top:80px;
+/* VIEW ONLY TAG */
+.card::after{
+content:"In-Store Exclusive";
+position:absolute;
+top:10px;
+left:10px;
+background:gold;
+color:black;
+padding:3px 8px;
+font-size:0.7rem;
+border-radius:5px;
+}
+
+/* ===== BRAND SECTIONS ===== */
+.section{
+margin-top:120px;
 text-align:center;
-font-size:1.1rem;
+padding:40px 10%;
+}
+
+.section h2{
+font-size:2rem;
+margin-bottom:20px;
+}
+
+.lux-line{
+height:1px;
+background:gold;
+margin:20px auto;
+width:60%;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:40px;
+}
+
+.gallery img{
+width:100%;
+border-radius:12px;
+opacity:0.9;
+}
+
+footer{
+margin-top:120px;
+text-align:center;
+padding:40px 10px;
+border-top:1px solid gold;
+font-size:0.9rem;
 }
 </style>
 </head>
@@ -195,33 +235,48 @@ font-size:1.1rem;
 <img src="Maisondusport-file.png" class="top-logo" id="mainLogo">
 <div class="statement">A place where football meets elegance</div>
 
+<div class="showroom-banner">
+This is a private showroom experience. All pieces are available exclusively in-store.
+</div>
+
 <div class="products">
-<div class="card" onclick="openProduct('Luxury Match Jersey', 40, 'Premium football-inspired luxury fabric.', 'shirt-file.png.jpeg')">
-<img src="shirt-file.png.jpeg">
-<h3>Luxury Match Jersey</h3>
-<p>$40</p>
+<div class="card"><img src="shirt-file.png.jpeg"><h3>Luxury Match Jersey</h3><p>$40</p></div>
+<div class="card"><img src="shirt-file.png.jpeg"><h3>Elite Training Tee</h3><p>$35</p></div>
+<div class="card"><img src="shirt-file.png.jpeg"><h3>Football Luxe</h3><p>$50</p></div>
+<div class="card"><img src="shirt-file.png.jpeg"><h3>Minimal Pro Fit</h3><p>$30</p></div>
 </div>
-<div class="card" onclick="openProduct('Elite Training Tee', 35, 'High-quality training tee for elite players.', 'shirt-file.png.jpeg')">
-<img src="shirt-file.png.jpeg">
-<h3>Elite Training Tee</h3>
-<p>$35</p>
+
+<!-- BRAND STORY -->
+<div class="section">
+<h2>The Maison Philosophy</h2>
+<div class="lux-line"></div>
+<p>Maison du Sport is where elite football culture meets refined design. Each piece reflects performance, prestige, and presence.</p>
 </div>
-<div class="card" onclick="openProduct('Football Luxe', 50, 'Luxury football tee for premium matches.', 'shirt-file.png.jpeg')">
+
+<!-- GALLERY -->
+<div class="section">
+<h2>Inside the Maison</h2>
+<div class="lux-line"></div>
+<div class="gallery">
+<img src="stadium-bg.jpg">
+<img src="footballer-art.png">
 <img src="shirt-file.png.jpeg">
-<h3>Football Luxe</h3>
-<p>$50</p>
-</div>
-<div class="card" onclick="openProduct('Minimal Pro Fit', 30, 'Sleek minimal fit for comfort and style.', 'shirt-file.png.jpeg')">
-<img src="shirt-file.png.jpeg">
-<h3>Minimal Pro Fit</h3>
-<p>$30</p>
+<img src="Maisondusport-file.png">
 </div>
 </div>
 
-<div class="contact">
-<h2>Contact Maison du Sport</h2>
-<p>Email: contact@maisondusport.com</p>
+<!-- EXPERIENCE -->
+<div class="section">
+<h2>The In-Store Experience</h2>
+<div class="lux-line"></div>
+<p>Personal fittings. Private viewing. Limited pieces. Designed for those who understand the game beyond the field.</p>
 </div>
+
+<footer>
+Maison du Sport — Private Showroom Collection<br>
+Contact: contact@maisondusport.com
+</footer>
+
 </section>
 
 <script>
@@ -229,10 +284,7 @@ function enterSite(){
 document.getElementById("intro").style.display="none";
 document.body.style.overflow="auto";
 document.getElementById("site").style.display="block";
-
-setTimeout(()=>{
-document.getElementById("mainLogo").classList.add("grow");
-},300);
+setTimeout(()=>{document.getElementById("mainLogo").classList.add("grow");},300);
 }
 </script>
 
