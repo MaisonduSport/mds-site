@@ -8,7 +8,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Montserrat,sans-serif;scroll-behavior:smooth;background:#3e2723;color:gold;}
+body{font-family:Montserrat,sans-serif;scroll-behavior:smooth;background:#3e2723;color:gold;overflow:hidden;}
 h1,h2,h3{font-family:'Playfair Display',serif;}
 a{text-decoration:none;color:inherit;}
 
@@ -19,6 +19,13 @@ top:0;left:0;width:100%;
 background:rgba(0,0,0,0.8);
 backdrop-filter:blur(5px);
 display:flex;justify-content:center;gap:2rem;padding:1rem;z-index:1000;
+opacity:0; /* hidden initially */
+pointer-events:none;
+transition:0.5s;
+}
+.navbar.show{
+opacity:1;
+pointer-events:auto;
 }
 .navbar a{cursor:pointer;font-weight:600;padding:5px 10px;transition:0.3s;}
 .navbar a:hover{background:gold;color:black;border-radius:6px;}
@@ -72,7 +79,7 @@ footer{margin-top:120px;text-align:center;padding:40px 10px;border-top:1px solid
 </head>
 <body>
 
-<div class="navbar">
+<div class="navbar" id="navbar">
 <a href="#jersey">Jersey</a>
 <a href="#maison">The Maison</a>
 <a href="#contact">Contact</a>
@@ -90,48 +97,4 @@ footer{margin-top:120px;text-align:center;padding:40px 10px;border-top:1px solid
 <h2 class="section-title" data-animate>Jersey Collection</h2>
 <div class="lux-line"></div>
 <div class="products" data-animate>
-<div class="card"><img src="shirt-file.png.jpeg"><h3>Luxury Match Jersey</h3></div>
-<div class="card"><img src="shirt-file.png.jpeg"><h3>Elite Training Tee</h3></div>
-<div class="card"><img src="shirt-file.png.jpeg"><h3>Football Luxe</h3></div>
-<div class="card"><img src="shirt-file.png.jpeg"><h3>Minimal Pro Fit</h3></div>
-</div>
-</section>
-
-<section id="maison">
-<h2 class="section-title" data-animate>The Maison Concept</h2>
-<div class="lux-line"></div>
-<div class="maison-gallery" data-animate>
-<div class="maison-card"><img src="stadium-bg.jpg"><h3>Maison Display 1</h3></div>
-<div class="maison-card"><img src="footballer-art.png"><h3>Maison Display 2</h3></div>
-<div class="maison-card"><img src="Maisondusport-file.png"><h3>Maison Display 3</h3></div>
-</div>
-</section>
-
-<section id="contact">
-<h2 class="section-title" data-animate>Contact Maison du Sport</h2>
-<div class="lux-line"></div>
-<p data-animate style="text-align:center;">Email: contact@maisondusport.com</p>
-</section>
-
-<footer>
-Maison du Sport — Digital Showroom Concept<br>
-Online Releases Only • Physical Experience Coming Soon
-</footer>
-
-<script>
-// Enter site
-function enterSite(){
-document.getElementById("intro").style.display="none";
-document.body.style.overflow="auto";
-document.getElementById("jersey").scrollIntoView();
-}
-
-// Animate on scroll
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){entry.target.classList.add('visible');}});},{threshold:0.2});
-document.querySelectorAll('[data-animate]').forEach(el=>observer.observe(el));
-</script>
-
-</body>
-</html>
+<div class="card"><img src="shirt
