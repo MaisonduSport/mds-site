@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maison du Sport — Digital Showroom</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-/* Reset & Base */
+/* RESET */
 * {margin:0;padding:0;box-sizing:border-box;}
-body {font-family:Montserrat, sans-serif; overflow:hidden; background:#fdf6ec; color:#3e2723;}
-h1,h2,h3 {font-family:'Playfair Display', serif; color:#3e2723;}
+body {font-family:Montserrat,sans-serif; overflow:hidden; background:#f5f1ec; color:#3e2723;}
+h1,h2,h3{font-family:'Playfair Display', serif; color:#3e2723;}
 
-/* ===== INTRO CINEMATIC ===== */
+/* ===== CINEMATIC INTRO ===== */
 .intro {
 height:100vh;
 display:flex;
@@ -23,7 +21,7 @@ align-items:center;
 text-align:center;
 position:relative;
 overflow:hidden;
-background:#fdf6ec;
+background: linear-gradient(135deg, #e7ded3, #d7c5b0, #e0d5c3);
 }
 
 .intro::before {
@@ -31,213 +29,104 @@ content:"";
 position:absolute;
 inset:0;
 background: url('stadium-bg.jpg') center/cover no-repeat;
-filter: brightness(0.85) contrast(1.1);
+filter: brightness(0.75) contrast(1.15) blur(1px);
 animation: slowZoom 25s ease-in-out infinite alternate;
 z-index:-2;
 }
-
-@keyframes slowZoom {from{transform:scale(1)} to{transform:scale(1.12)}}
 
 .intro::after {
 content:"";
 position:absolute;
 inset:0;
-background:linear-gradient(to top, rgba(253,246,236,0.6), rgba(253,246,236,0.9));
+background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.2), transparent 70%);
 z-index:-1;
+animation: glowPulse 6s ease-in-out infinite alternate;
 }
+
+@keyframes slowZoom {from{transform:scale(1)} to{transform:scale(1.12)}}
+@keyframes glowPulse {0%{opacity:0.4}50%{opacity:0.7}100%{opacity:0.4}}
 
 /* Floating particles */
 .particles {
-position:absolute;
-top:0; left:0; width:100%; height:100%;
+position:absolute; top:0; left:0; width:100%; height:100%;
 pointer-events:none;
-background-image: radial-gradient(rgba(158,121,80,0.3) 1px, transparent 1px);
-background-size: 40px 40px;
-animation: floatParticles 30s linear infinite;
+background-image: radial-gradient(rgba(189,142,85,0.35) 2px, transparent 2px);
+background-size:50px 50px;
+animation: floatParticles 40s linear infinite;
 }
+@keyframes floatParticles {0%{background-position:0 0}100%{background-position:0 -400px}}
 
-@keyframes floatParticles {0%{background-position:0 0}100%{background-position:0 -200px}}
-
-/* Intro text */
-.intro h1{
-font-size:4rem;
-font-weight:700;
-line-height:1.2;
-opacity:0;
+/* INTRO TEXT */
+.intro h1 {
+font-size:4rem; font-weight:700; opacity:0;
 animation:fadeInUp 2s forwards 0.5s;
+text-shadow: 0 0 15px rgba(189,142,85,0.7);
 }
-
-.intro h2{
-margin-top:20px;
-font-weight:400;
-font-size:1.5rem;
-opacity:0;
+.intro h2 {
+margin-top:20px; font-weight:400; font-size:1.8rem; opacity:0;
 animation:fadeInUp 2s forwards 1.5s;
 color:#8b5e3c;
+text-shadow: 0 0 10px rgba(139,94,60,0.5);
 }
-
-.enter-btn{
-margin-top:3rem;
-padding:1rem 3rem;
-border:2px solid #8b5e3c;
-background:none;
-color:#8b5e3c;
-font-size:1.2rem;
-cursor:pointer;
-opacity:0;
-animation:fadeInUp 2s forwards 2.5s, pulseGlow 2s infinite 4.5s;
-transition:0.3s;
-border-radius:8px;
+.enter-btn {
+margin-top:3rem; padding:1rem 3rem; border:2px solid #8b5e3c;
+background:none; color:#8b5e3c; font-size:1.3rem; cursor:pointer;
+opacity:0; animation:fadeInUp 2s forwards 2.5s, pulseGlow 2s infinite 4.5s;
+transition:0.3s; border-radius:8px; font-weight:600;
 }
-
 .enter-btn:hover {
-background:#8b5e3c;
-color:#fdf6ec;
-transform:scale(1.05);
+background:#8b5e3c; color:#fdf6ec; transform:scale(1.05);
 }
-
-@keyframes pulseGlow{
-0%,100%{box-shadow:0 0 0px #8b5e3c}
-50%{box-shadow:0 0 15px #8b5e3c}
-}
-
-@keyframes fadeInUp{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0px #8b5e3c}50%{box-shadow:0 0 18px #8b5e3c}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(25px);} to{opacity:1;transform:translateY(0);}}
 
 /* ===== MAIN SITE ===== */
 .site{display:none; padding:2rem; max-width:1200px; margin:0 auto; scroll-behavior:smooth;}
-
-/* Top logo */
-.top-logo{
-position:fixed;
-top:15px; left:20px;
-width:120px;
-transition: all 1s ease;
-}
-
-/* Scroll Nav Bar */
+.top-logo{position:fixed; top:15px; left:20px; width:120px; transition:all 1s ease;}
 .navbar{
-position:fixed;
-top:0; right:0;
-background:rgba(253,246,236,0.95);
-display:flex;
-gap:1rem;
-padding:10px 20px;
-border-left:1px solid #8b5e3c;
-border-bottom:1px solid #8b5e3c;
-border-radius:0 0 0 8px;
-font-weight:600;
-display:none;
+position:fixed; top:0; right:0; background:rgba(245,241,236,0.95);
+display:flex; gap:1rem; padding:10px 20px; border-left:1px solid #8b5e3c;
+border-bottom:1px solid #8b5e3c; border-radius:0 0 0 8px; font-weight:600; display:none;
 }
+.navbar a{ text-decoration:none; color:#3e2723; padding:6px 12px; transition:0.3s; border-radius:6px; }
+.navbar a:hover{ background:#8b5e3c; color:#fdf6ec; }
 
-.navbar a{
-text-decoration:none;
-color:#3e2723;
-padding:6px 12px;
-transition:0.3s;
-border-radius:6px;
-}
-
-.navbar a:hover{
-background:#8b5e3c;
-color:#fdf6ec;
-}
-
-/* Statement */
+/* STATEMENT */
 .statement{margin-top:100px; text-align:center; font-size:2rem; line-height:1.4; color:#4a2e2a;}
 
-/* Products */
-.products{
-margin-top:60px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:30px;
-pointer-events:none;
-}
-
-.card{
-background:#f5eee8;
-padding:20px;
-border-radius:14px;
-text-align:center;
-position:relative;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
-transition: transform 0.3s;
-}
-
+/* PRODUCTS */
+.products{margin-top:60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; pointer-events:none;}
+.card{background:#f5eee8; padding:20px; border-radius:14px; text-align:center; position:relative; box-shadow:0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s;}
 .card:hover{transform:scale(1.03);}
 .card img{width:100%; border-radius:10px;}
-
 .card::after{
-content:"Online Exclusive • Coming Soon";
-position:absolute;
-top:12px;
-left:12px;
-background:#bfa173;
-color:#fdf6ec;
-padding:4px 8px;
-font-size:0.65rem;
-border-radius:5px;
-font-family:'Playfair Display', serif;
+content:"Online Exclusive • Coming Soon"; position:absolute; top:12px; left:12px;
+background:#bfa173; color:#fdf6ec; padding:4px 8px; font-size:0.65rem; border-radius:5px; font-family:'Playfair Display', serif;
 }
 
-/* Maison gallery */
-.maison-gallery{
-margin-top:100px;
-text-align:center;
-}
-
+/* MAISON GALLERY */
+.maison-gallery{margin-top:100px; text-align:center;}
 .maison-gallery h2{margin-bottom:20px;}
-.maison-gallery .gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-}
-
+.maison-gallery .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;}
 .maison-gallery .gallery .concept-card{
-background:#f5eee8;
-padding:15px;
-border-radius:12px;
-box-shadow:0 3px 8px rgba(0,0,0,0.08);
-position:relative;
-transition: transform 0.3s;
-pointer-events:none;
+background:#f5eee8; padding:15px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.08);
+position:relative; transition: transform 0.3s; pointer-events:none;
 }
-
-.maison-gallery .gallery .concept-card:hover{
-transform:scale(1.02);
-}
-
+.maison-gallery .gallery .concept-card:hover{transform:scale(1.02);}
 .concept-card::after{
-content:"[This is just a concept]";
-position:absolute;
-top:8px; left:8px;
-font-size:0.6rem;
-color:#8b5e3c;
-font-style:italic;
+content:"[This is just a concept]"; position:absolute; top:8px; left:8px;
+font-size:0.6rem; color:#8b5e3c; font-style:italic;
 }
 
-/* Section Titles */
+/* SECTIONS */
 .section{margin-top:80px; text-align:center; padding:40px 10%;}
 .section h2{font-size:2rem; margin-bottom:20px;}
 .lux-line{height:1px; background:#8b5e3c; width:60%; margin:0 auto 20px auto;}
 
-/* Footer */
-footer{
-margin-top:120px;
-text-align:center;
-padding:40px 10px;
-border-top:1px solid #8b5e3c;
-font-size:0.9rem;
-line-height:1.6;
-}
-
-/* Smooth scroll anchors */
+/* FOOTER */
+footer{margin-top:120px; text-align:center; padding:40px 10px; border-top:1px solid #8b5e3c; font-size:0.9rem; line-height:1.6;}
 </style>
 </head>
-
 <body>
 
 <!-- INTRO -->
@@ -252,7 +141,7 @@ line-height:1.6;
 <section class="site" id="site">
 <img src="Maisondusport-file.png" class="top-logo" id="mainLogo">
 
-<!-- Nav bar (hidden initially) -->
+<!-- NAVBAR -->
 <div class="navbar" id="navbar">
 <a href="#jersey">Jersey</a>
 <a href="#maison">The Maison</a>
@@ -273,7 +162,7 @@ line-height:1.6;
 <div id="maison" class="maison-gallery">
 <h2>The Maison</h2>
 <div class="gallery">
-<div class="concept-card"><img src="stadium-bg.jpg"></div>
+<div class="concept-card"><img src="Store-file.png"></div>
 <div class="concept-card"><img src="footballer-art.png"></div>
 <div class="concept-card"><img src="Maisondusport-file.png"></div>
 </div>
@@ -304,4 +193,5 @@ setTimeout(()=>{document.getElementById("mainLogo").classList.add("grow");},300)
 
 </body>
 </html>
+
 
