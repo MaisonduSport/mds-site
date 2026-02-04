@@ -10,11 +10,9 @@
 <style>
 * {margin:0;padding:0;box-sizing:border-box}
 body {font-family:Montserrat, sans-serif; overflow:hidden;}
-
-/* Fonts */
 h1,h2,h3 {font-family:'Playfair Display', serif}
 
-/* INTRO SCREEN */
+/* ================= INTRO CINEMATIC ================= */
 .intro {
 height:100vh;
 display:flex;
@@ -22,47 +20,77 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-background:#0b0b0b;
 color:white;
 position:relative;
 overflow:hidden;
 }
 
-/* ✨ Floating Gold Particles */
-.intro::after{
-content:"";
-position:absolute;
-width:200%;
-height:200%;
-background-image: radial-gradient(gold 1px, transparent 1px);
-background-size: 50px 50px;
-opacity:0.05;
-animation: floatParticles 25s linear infinite;
-}
-
-@keyframes floatParticles{
-from{transform:translateY(0);}
-to{transform:translateY(-200px);}
-}
-
+/* 🔥 BACKGROUND IMAGE */
 .intro::before{
 content:"";
 position:absolute;
 inset:0;
-background:radial-gradient(circle at center, rgba(255,215,0,0.08), #0b0b0b 70%);
-z-index:0;
+background: url('stadium-bg.jpg') center/cover no-repeat;
+animation: slowZoom 20s ease-in-out infinite alternate;
+z-index:-3;
 }
 
-/* Animated glow text */
+@keyframes slowZoom{
+from{transform:scale(1)}
+to{transform:scale(1.15)}
+}
+
+/* DARK OVERLAY */
+.intro::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
+z-index:-2;
+}
+
+/* ✨ MOVING LIGHT SWEEP */
+.light-sweep{
+position:absolute;
+top:0;
+left:-100%;
+width:60%;
+height:100%;
+background:linear-gradient(120deg, transparent, rgba(255,215,0,0.08), transparent);
+animation:sweep 6s infinite;
+z-index:-1;
+}
+
+@keyframes sweep{
+to{left:120%}
+}
+
+/* 🖼 LEFT SIDE IMAGE BIGGER */
+.left-art{
+position:absolute;
+left:0;
+bottom:0;
+height:95%;
+opacity:0.25;
+animation: floatArt 6s ease-in-out infinite;
+}
+
+@keyframes floatArt{
+0%{transform:translateY(0)}
+50%{transform:translateY(-15px)}
+100%{transform:translateY(0)}
+}
+
+/* TEXT GLOW */
 .intro h1{
 font-size:4rem;
-z-index:2;
 background: linear-gradient(45deg, #ffd700, #fff8dc, #ffd700);
 background-size:400px;
-background-clip: text;
--webkit-background-clip: text;
-color: transparent;
-animation: shimmer 3s infinite, fadeInScale 2s ease forwards;
+background-clip:text;
+-webkit-background-clip:text;
+color:transparent;
+text-shadow:0 0 25px rgba(255,215,0,0.3);
+animation: shimmer 3s infinite;
 }
 
 @keyframes shimmer{
@@ -70,18 +98,11 @@ animation: shimmer 3s infinite, fadeInScale 2s ease forwards;
 100%{background-position:400px 0}
 }
 
-@keyframes fadeInScale{
-from{opacity:0;transform:scale(0.9)}
-to{opacity:1;transform:scale(1)}
-}
-
 .intro h2{
-font-size:1.5rem;
-font-weight:300;
-color:rgba(255,215,0,0.8);
 margin-top:15px;
+color:rgba(255,215,0,0.85);
+animation:fadeIn 2s forwards 1s;
 opacity:0;
-animation: fadeIn 2s forwards 1s;
 }
 
 .enter-btn{
@@ -92,30 +113,19 @@ background:none;
 color:gold;
 font-size:1.2rem;
 cursor:pointer;
-z-index:2;
-opacity:0;
-animation: fadeIn 2s forwards 1.5s, pulseGlow 2s infinite 3s;
-transition:0.3s;
+animation:fadeIn 2s forwards 1.5s, pulseGlow 2s infinite 3s;
 }
 
 @keyframes pulseGlow{
-0%{box-shadow:0 0 0px gold}
-50%{box-shadow:0 0 15px gold}
-100%{box-shadow:0 0 0px gold}
-}
-
-.enter-btn:hover{
-background:gold;
-color:black;
-transform:scale(1.08);
+50%{box-shadow:0 0 20px gold}
 }
 
 @keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
 }
 
-/* MAIN SITE */
+/* ================= MAIN SITE ================= */
 .site{
 display:none;
 background:#3e2723;
@@ -124,7 +134,6 @@ min-height:100vh;
 padding:2rem;
 }
 
-/* TOP LOGO */
 .top-logo{
 position:fixed;
 top:15px;
@@ -133,21 +142,18 @@ width:90px;
 transition: all 1s ease;
 }
 
-/* 🔥 Logo grows after intro */
 .top-logo.grow{
-width:140px;
+width:160px;
 transform:scale(1.1);
-filter: drop-shadow(0 0 10px gold);
+filter: drop-shadow(0 0 12px gold);
 }
 
-/* HERO MESSAGE */
 .statement{
 margin-top:80px;
 text-align:center;
 font-size:2rem;
 }
 
-/* PRODUCTS */
 .products{
 margin-top:60px;
 display:grid;
@@ -167,102 +173,19 @@ transition:.3s;
 .card:hover{transform:scale(1.05)}
 .card img{width:100%;border-radius:12px}
 
-/* CONTACT */
 .contact{
 margin-top:80px;
 text-align:center;
 font-size:1.1rem;
 }
-
-/* PRODUCT PAGE */
-.product-page{
-display:none;
-background:#3e2723;
-color:gold;
-min-height:100vh;
-padding:2rem;
-text-align:center;
-}
-
-.product-page img{
-width:300px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-.product-page button{
-padding:10px 30px;
-border:1px solid gold;
-background:none;
-color:gold;
-cursor:pointer;
-margin-right:10px;
-}
-
-/* CART PANEL */
-.cart{
-position:fixed;
-right:-100%;
-top:0;
-width:320px;
-height:100vh;
-background:#000;
-color:white;
-padding:30px;
-transition:.5s;
-z-index:20;
-}
-.cart h2{color:gold;margin-bottom:20px}
-.cart-item{margin-bottom:10px}
-.cart-item button{
-margin-left:10px;
-background:red;
-color:white;
-border:none;
-padding:2px 6px;
-cursor:pointer;
-}
-.cart.open{right:0}
-
-/* PAYMENT MODAL */
-#paymentModal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background: rgba(0,0,0,0.7);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:50;
-}
-.payment-content{
-background:#3e2723;
-color:gold;
-padding:30px;
-border-radius:15px;
-text-align:center;
-min-width:300px;
-}
-.payment-content button{
-margin:10px;
-padding:10px 20px;
-cursor:pointer;
-border:none;
-border-radius:6px;
-transition:0.3s;
-}
-.payment-content button:hover{transform:scale(1.05);}
-.paypal-btn{background:#ffc439;color:black;}
-.moncash-btn{background:#ff8c00;color:white;}
-.close-modal{background:red;color:white;}
 </style>
 </head>
 
 <body>
 
 <section class="intro" id="intro">
+<div class="light-sweep"></div>
+<img src="footballer-art.png" class="left-art">
 <h1>Welcome to Maison du Sport</h1>
 <h2>Exclusive Football Elegance</h2>
 <button class="enter-btn" onclick="enterSite()">Enter the Maison</button>
@@ -272,7 +195,6 @@ transition:0.3s;
 <img src="Maisondusport-file.png" class="top-logo" id="mainLogo">
 <div class="statement">A place where football meets elegance</div>
 
-<!-- PRODUCTS STAY SAME -->
 <div class="products">
 <div class="card" onclick="openProduct('Luxury Match Jersey', 40, 'Premium football-inspired luxury fabric.', 'shirt-file.png.jpeg')">
 <img src="shirt-file.png.jpeg">
@@ -302,15 +224,12 @@ transition:0.3s;
 </div>
 </section>
 
-<!-- EVERYTHING ELSE (product page, cart, payments) REMAINS EXACTLY SAME -->
-
 <script>
 function enterSite(){
 document.getElementById("intro").style.display="none";
 document.body.style.overflow="auto";
 document.getElementById("site").style.display="block";
 
-// ✨ Make logo grow after entering
 setTimeout(()=>{
 document.getElementById("mainLogo").classList.add("grow");
 },300);
@@ -319,12 +238,3 @@ document.getElementById("mainLogo").classList.add("grow");
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
