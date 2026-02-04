@@ -1,100 +1,192 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maison du Sport</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Montserrat,sans-serif;scroll-behavior:smooth;background:#3e2723;color:gold;overflow:hidden;}
-h1,h2,h3{font-family:'Playfair Display',serif;}
-a{text-decoration:none;color:inherit;}
-
-/* =================== NAVIGATION =================== */
-.navbar{
-position:fixed;
-top:0;left:0;width:100%;
-background:rgba(0,0,0,0.8);
-backdrop-filter:blur(5px);
-display:flex;justify-content:center;gap:2rem;padding:1rem;z-index:1000;
-opacity:0; /* hidden initially */
-pointer-events:none;
-transition:0.5s;
-}
-.navbar.show{
-opacity:1;
-pointer-events:auto;
-}
-.navbar a{cursor:pointer;font-weight:600;padding:5px 10px;transition:0.3s;}
-.navbar a:hover{background:gold;color:black;border-radius:6px;}
-
-/* =================== INTRO =================== */
-.intro{
-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;color:white;
-}
-.intro::before{
-content:"";position:absolute;inset:0;background:url('stadium-bg.jpg') center/cover no-repeat;animation:slowZoom 20s ease-in-out infinite alternate;z-index:-3;
-}
-@keyframes slowZoom{from{transform:scale(1)}to{transform:scale(1.15)}}
-.intro::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,0,0,0.6));z-index:-2;}
-.light-sweep{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,215,0,0.08),transparent);animation:sweep 6s infinite;z-index:-1;}
-@keyframes sweep{to{left:120%}}
-.left-art{position:absolute;left:0;bottom:0;height:95%;opacity:0.25;animation:floatArt 6s ease-in-out infinite;}
-@keyframes floatArt{0%{transform:translateY(0)}50%{transform:translateY(-15px)}100%{transform:translateY(0)}}
-.intro h1{font-size:4rem;background:linear-gradient(45deg,#ffd700,#fff8dc,#ffd700);background-size:400px;background-clip:text;-webkit-background-clip:text;color:transparent;text-shadow:0 0 25px rgba(255,215,0,0.3);animation:shimmer 3s infinite;}
-@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-.intro h2{margin-top:15px;color:rgba(255,215,0,0.85);animation:fadeIn 2s forwards 1s;opacity:0;}
-.enter-btn{margin-top:2rem;padding:1rem 3rem;border:2px solid gold;background:none;color:gold;font-size:1.2rem;cursor:pointer;animation:fadeIn 2s forwards 1.5s,pulseGlow 2s infinite 3s;}
-@keyframes pulseGlow{50%{box-shadow:0 0 20px gold}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* =================== SECTIONS =================== */
-section{padding:120px 10%;}
-h2.section-title{font-size:2rem;margin-bottom:20px;text-align:center;}
-.lux-line{height:1px;background:gold;margin:20px auto;width:60%;}
-
-/* =================== PRODUCTS =================== */
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:30px;pointer-events:none;}
-.card{background:#4e342e;padding:15px;border-radius:14px;text-align:center;position:relative;transition:.3s;}
-.card:hover{transform:scale(1.05);}
-.card img{width:100%;border-radius:12px;}
-.card::after{content:"Online Exclusive • Coming Soon";position:absolute;top:10px;left:10px;background:gold;color:black;padding:4px 8px;font-size:0.65rem;border-radius:5px;}
-
-/* =================== MAISON CONCEPT =================== */
-.maison-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:30px;margin-top:40px;}
-.maison-card{background:#4e342e;padding:15px;border-radius:14px;text-align:center;position:relative;transition:.3s;}
-.maison-card:hover{transform:scale(1.05);}
-.maison-card img{width:100%;border-radius:12px;}
-.maison-card::after{content:"This is just a concept";position:absolute;top:10px;left:10px;background:gold;color:black;padding:4px 8px;font-size:0.65rem;border-radius:5px;}
-
-/* =================== FOOTER =================== */
-footer{margin-top:120px;text-align:center;padding:40px 10px;border-top:1px solid gold;font-size:0.9rem;}
-
-/* =================== SCROLL ANIMATIONS =================== */
-[data-animate]{opacity:0;transform:translateY(30px);transition:0.8s;}
-[data-animate].visible{opacity:1;transform:translateY(0);}
-</style>
-</head>
-<body>
-
-<div class="navbar" id="navbar">
-<a href="#jersey">Jersey</a>
-<a href="#maison">The Maison</a>
-<a href="#contact">Contact</a>
-</div>
-
 <section class="intro" id="intro">
-<div class="light-sweep"></div>
-<img src="footballer-art.png" class="left-art">
-<h1>Welcome to Maison du Sport</h1>
-<h2>Exclusive Football Elegance</h2>
-<button class="enter-btn" onclick="enterSite()">Enter the Maison</button>
+  <!-- Moving Light Sweep -->
+  <div class="light-sweep"></div>
+
+  <!-- Floating Left-Side Art -->
+  <img src="footballer-art.png" class="left-art" alt="Football Concept Art">
+
+  <!-- Main Cinematic Text -->
+  <h1>Maison du Sport</h1>
+  <h2>Exclusive Football Elegance</h2>
+
+  <!-- Enter Button -->
+  <button class="enter-btn" onclick="enterSite()">Enter the Maison</button>
+
+  <!-- Floating Particles -->
+  <canvas id="particleCanvas"></canvas>
 </section>
 
-<section id="jersey">
-<h2 class="section-title" data-animate>Jersey Collection</h2>
-<div class="lux-line"></div>
-<div class="products" data-animate>
-<div class="card"><img src="shirt
+<style>
+/* ================= INTRO ================= */
+.intro {
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
+  position:relative;
+  overflow:hidden;
+  background:#0b0b0b;
+}
+
+/* Moving Light Sweep */
+.light-sweep{
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:60%;
+  height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,215,0,0.08), transparent);
+  animation:sweep 7s infinite;
+  z-index:1;
+}
+@keyframes sweep{to{left:120%}}
+
+/* Floating Left-Side Image */
+.left-art{
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:90%;
+  opacity:0.2;
+  animation: floatArt 6s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes floatArt{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+  100%{transform:translateY(0)}
+}
+
+/* Headline & Glow */
+.intro h1{
+  font-size:4rem;
+  z-index:2;
+  background: linear-gradient(45deg, #ffd700, #fff8dc, #ffd700);
+  background-size:400px;
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 0 25px rgba(255,215,0,0.3);
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer{
+  0%{background-position:-400px 0}
+  100%{background-position:400px 0}
+}
+
+.intro h2{
+  margin-top:15px;
+  font-size:1.5rem;
+  font-weight:300;
+  color:rgba(255,215,0,0.8);
+  z-index:2;
+  opacity:0;
+  animation: fadeIn 2s forwards 1s;
+}
+
+/* Enter Button */
+.enter-btn{
+  margin-top:2rem;
+  padding:1rem 3rem;
+  border:2px solid gold;
+  background:none;
+  color:gold;
+  font-size:1.2rem;
+  cursor:pointer;
+  z-index:2;
+  opacity:0;
+  animation: fadeIn 2s forwards 1.5s, pulseGlow 2s infinite 3s;
+  transition:0.3s;
+}
+.enter-btn:hover{
+  background:gold;
+  color:black;
+  transform:scale(1.08);
+}
+
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 0px gold}
+  50%{box-shadow:0 0 25px gold}
+  100%{box-shadow:0 0 0px gold}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Particle Canvas */
+#particleCanvas{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+}
+</style>
+
+<script>
+// Enter Site Function (to be connected to main site)
+function enterSite(){
+  document.getElementById("intro").style.display="none";
+  document.body.style.overflow="auto";
+  document.getElementById("site").style.display="block"; // Make sure main site has id="site"
+}
+
+// ================== PARTICLE EFFECT ==================
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+
+class Particle {
+  constructor(){
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random()*2 + 1;
+    this.speedY = Math.random()*0.5 + 0.2;
+    this.color = 'rgba(255,215,0,' + (Math.random()*0.5+0.2) + ')';
+  }
+  update(){
+    this.y -= this.speedY;
+    if(this.y < 0) this.y = canvas.height;
+  }
+  draw(){
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function initParticles(){
+  particlesArray = [];
+  for(let i=0;i<200;i++){
+    particlesArray.push(new Particle());
+  }
+}
+
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<particlesArray.length;i++){
+    particlesArray[i].update();
+    particlesArray[i].draw();
+  }
+  requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener('resize',()=>{
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  initParticles();
+});
+
+initParticles();
+animateParticles();
+</script>
