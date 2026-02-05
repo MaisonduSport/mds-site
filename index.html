@@ -30,7 +30,7 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 /* SITE */
 .site{opacity:0;transition:opacity 1.5s ease;padding:60px 10%;max-width:1300px;margin:auto;background:#800020;}
 .site.visible{opacity:1}
-.logo{position:fixed;top:25px;left:40px;width:190px;opacity:.85;z-index:2;}
+.logo{position:fixed;top:25px;left:40px;width:210px;opacity:.85;z-index:2;}
 
 /* 🔥 EXCLUSIVE SHOWROOM NOTICE */
 .notice{
@@ -83,7 +83,9 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 <div class="curtain right-curtain"></div>
 
 <section class="intro" id="intro">
-  <video src="Cinematic_video_focusing_202602011237_ga4dn.mp4" autoplay muted loop></video>
+  <video autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="Cinematic_video_focusing_202602011237_ga4dn.mp4" type="video/mp4">
+  </video> 
   <h1>Welcome to Maison du Sport</h1>
   <button class="enter-btn" onclick="enterMaison()">ENTER THE MAISON</button>
 </section>
