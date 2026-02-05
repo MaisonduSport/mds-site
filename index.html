@@ -30,8 +30,42 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 .site{opacity:0;transition:opacity 1.5s ease;padding:60px 10%;max-width:1300px;margin:auto;background:#800020;}
 .site.visible{opacity:1}
 .logo{position:fixed;top:25px;left:40px;width:130px;opacity:.85;z-index:2;}
-.notice{border:1px solid #f6f1e8;display:inline-block;padding:10px 18px;font-size:.85rem;letter-spacing:1px;margin-bottom:70px;opacity:0;transition:opacity 1s ease;}
-.notice.visible{opacity:1;}
+
+/* ✨ LUXURY PLAQUE NOTICE */
+.notice{
+  margin:0 auto 90px auto;
+  max-width:720px;
+  padding:28px 40px;
+  border:1px solid rgba(255,255,255,0.25);
+  text-align:center;
+  font-size:.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  line-height:1.8;
+  background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  backdrop-filter:blur(6px);
+  position:relative;
+  opacity:0;
+  transition:opacity 1.2s ease,transform 1.2s ease;
+  transform:translateY(20px);
+}
+.notice span{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+.notice::before,.notice::after{
+  content:"";
+  position:absolute;
+  width:22px;height:22px;
+  border:1px solid rgba(255,215,170,.6);
+}
+.notice::before{top:-6px;left:-6px;border-right:none;border-bottom:none;}
+.notice::after{bottom:-6px;right:-6px;border-left:none;border-top:none;}
+.notice.visible{opacity:1;transform:translateY(0);}
+
 .section-title{text-align:center;font-size:2rem;margin-bottom:40px;}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:50px;margin-bottom:120px;}
 .card{background:#a0002b;padding:25px;border-radius:6px;text-align:center;position:relative;transition:.4s;color:#f6f1e8;cursor:pointer;}
@@ -71,101 +105,19 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
   <div class="hero-section">
-    <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" style="opacity:1">
+    <img src="Haiti-file.png.jpeg" class="hero-img" id="heroImg1" style="opacity:1">
     <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" style="opacity:0">
     <div class="hero-text" id="heroText">MAISON WHERE FOOTBALL</div>
   </div>
 </div>
 
 <section class="site" id="site">
-  <div class="notice" id="notice">This page is a digital showcase room for viewing purposes only</div>
-
-  <div class="section-title">World Cup Special</div>
-  <div class="products" id="jerseyProducts">
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="Old2-file.png.jpeg"><h3>1974 Tribute Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="CW-file.png.jpeg"><h3>Trainer Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WW-file.png.jpeg"><h3>White Trainer Tee</h3></div>
-    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WC-file.png.jpeg"><h3>World Cup Tee</h3></div>
+  <div class="notice" id="notice">
+    <span>Maison du Sport Private Viewing</span>
+    This digital salon presents pieces for exhibition only.  
+    No direct purchase is enabled — inquiries are handled privately.
   </div>
 
-  <div class="section-title">Maison Gallery</div>
-  <div class="gallery">
-    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store-file.png.jpeg"><h3>Maison Concept</h3></div>
-  </div>
-
-  <div class="section-title">Contact</div>
-  <div class="contact">
-    Email: contactmaisondusport@gmail.com<br>
-    Phone: +509 4720 9775
-  </div>
-</section>
-
-<!-- MODAL -->
-<div class="modal" id="productModal">
-  <div class="modal-content">
-    <div class="close-modal" onclick="closeModal()">✕</div>
-    <img id="modalImg">
-    <h2 id="modalTitle"></h2>
-    <div class="modal-price" id="modalPrice"></div>
-    <p id="modalDesc"></p>
-  </div>
-</div>
-
-<script>
-function enterMaison(){
-  document.body.classList.add("open");
-  setTimeout(()=>{
-    intro.style.display="none";
-    heroWrapper.style.display="block";
-    document.body.style.overflow="auto";
-  },1200);
-}
-
-/* HERO SCROLL */
-window.addEventListener('scroll', ()=>{
-  if(heroWrapper.style.display!=="block") return;
-  const progress=Math.min(window.scrollY/(window.innerHeight*0.8),1);
-  heroImg1.style.opacity=1-progress;
-  heroImg2.style.opacity=progress;
-
-  if(progress<.5){
-    heroText.innerText="MAISON WHERE FOOTBALL";
-    heroText.style.opacity=1-progress*2;
-  }else{
-    heroText.innerText="MEET ELEGANCE";
-    heroText.style.opacity=(progress-.5)*2;
-  }
-
-  if(window.scrollY>window.innerHeight*.8){site.classList.add('visible');notice.classList.add('visible');}
-});
-
-/* PRODUCT DATA */
-const productData={
- "1974 Tribute Tee":{price:"$45",desc:"Tribute to Haiti’s historic World Cup qualification."},
- "Trainer Tee":{price:"$40",desc:"Special edition trainer tee to support the Grenadiers."},
- "White Trainer Tee":{price:"$40",desc:"Classic white federation pride tee."},
- "World Cup Tee":{price:"$50",desc:"Inspired by qualification match heritage."},
- "Maison Concept":{price:"Concept Project",desc:"Future luxury football Maison space."}
-};
-
-/* CLICK */
-document.querySelectorAll('.card').forEach(card=>{
- card.addEventListener('click',()=>{
-   const title=card.querySelector('h3').innerText;
-   const img=card.querySelector('img').src;
-   const data=productData[title];
-   modalImg.src=img;
-   modalTitle.innerText=title;
-   modalPrice.innerText=data.price;
-   modalDesc.innerText=data.desc;
-   productModal.classList.add('active');
- });
-});
-function closeModal(){productModal.classList.remove('active');}
-productModal.addEventListener('click',e=>{if(e.target.id==='productModal')closeModal();});
-</script>
-</body>
-</html>
 
 
 
