@@ -99,11 +99,10 @@ body{
 .open .left-curtain{transform:translateX(-100%)}
 .open .right-curtain{transform:translateX(100%)}
 
-/* ================= HERO STICKY SECTION ================= */
+/* ================= HERO SECTION ================= */
 .hero-wrapper{
   position:relative;
-  height:200vh; /* Twice the viewport height for scroll effect */
-  overflow:hidden;
+  height:200vh; /* allow scroll for text change */
 }
 
 .hero-section{
@@ -121,7 +120,6 @@ body{
   object-fit:cover;
   top:0;
   left:0;
-  transition:transform 1s ease;
 }
 
 .hero-text{
@@ -285,11 +283,11 @@ body{
 <!-- Logo -->
 <img src="Maisondusport-file.png" class="logo" alt="Maison du Sport Logo">
 
-<!-- Hero Scroll Section -->
+<!-- Hero Section -->
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
   <div class="hero-section">
     <img src="OM-file.png.jpeg" class="hero-img" id="heroImg1" alt="First Image">
-    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" alt="Second Image" style="opacity:0">
+    <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" alt="Second Image" style="display:none">
     <div class="hero-text" id="heroText">The Maison</div>
   </div>
 </div>
@@ -332,7 +330,7 @@ function enterMaison(){
   },1200);
 }
 
-/* ================= HERO SCROLL ANIMATION ================= */
+/* ================= TEXT ANIMATION ON SCROLL ================= */
 const heroWrapper = document.getElementById('heroWrapper');
 const heroImg1 = document.getElementById('heroImg1');
 const heroImg2 = document.getElementById('heroImg2');
@@ -341,23 +339,22 @@ const site = document.getElementById('site');
 
 window.addEventListener('scroll', ()=>{
   if(heroWrapper.style.display !== "block") return;
-  const rect = heroWrapper.getBoundingClientRect();
-  const progress = Math.min(Math.max(-rect.top / window.innerHeight,0),1);
 
-  // Image transitions
-  heroImg1.style.transform = `translateY(${progress*50}px)`;
-  heroImg2.style.transform = `translateY(${(1-progress)*50}px)`;
-  heroImg2.style.opacity = progress;
+  const scrollPos = window.scrollY;
+  const switchPoint = window.innerHeight * 0.8; // scroll threshold
 
-  // Text transitions
-  heroText.style.opacity = 1 - progress/0.5;
-  if(progress>0.5){
+  if(scrollPos > switchPoint){
+    heroImg1.style.display = "none";
+    heroImg2.style.display = "block";
     heroText.innerText = "Where Football Meets Elegance";
-    heroText.style.opacity = (progress-0.5)/0.5;
+  } else {
+    heroImg1.style.display = "block";
+    heroImg2.style.display = "none";
+    heroText.innerText = "The Maison";
   }
 
-  // Show site after hero
-  if(progress >= 1){
+  // Show site after hero section
+  if(scrollPos > window.innerHeight){
     site.classList.add('visible');
   }
 });
