@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maison du Sport — Digital Showroom</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;background:#0b1a2b;color:#f6f1e8;}
@@ -31,40 +32,25 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 .site.visible{opacity:1}
 .logo{position:fixed;top:25px;left:40px;width:130px;opacity:.85;z-index:2;}
 
-/* LUXURY PLAQUE NOTICE */
+/* 🔥 EXCLUSIVE SHOWROOM NOTICE */
 .notice{
-  margin:0 auto 90px auto;
-  max-width:720px;
-  padding:28px 40px;
-  border:1px solid rgba(255,255,255,0.25);
   text-align:center;
-  font-size:.85rem;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  line-height:1.8;
-  background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
-  backdrop-filter:blur(6px);
-  position:relative;
-  opacity:0;
-  transition:opacity 1.2s ease,transform 1.2s ease;
-  transform:translateY(20px);
-}
-.notice span{
-  display:block;
+  margin:0 auto 80px;
+  padding:25px 40px;
+  max-width:700px;
   font-family:'Playfair Display',serif;
-  font-size:1rem;
-  letter-spacing:3px;
-  margin-bottom:8px;
+  letter-spacing:1px;
+  font-size:1.1rem;
+  border:1px solid rgba(255,255,255,0.4);
+  background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
+  backdrop-filter:blur(6px);
+  box-shadow:0 0 30px rgba(255,255,255,0.08);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 1.2s ease, transform 1.2s ease;
 }
-.notice::before,.notice::after{
-  content:"";
-  position:absolute;
-  width:22px;height:22px;
-  border:1px solid rgba(255,215,170,.6);
-}
-.notice::before{top:-6px;left:-6px;border-right:none;border-bottom:none;}
-.notice::after{bottom:-6px;right:-6px;border-left:none;border-top:none;}
 .notice.visible{opacity:1;transform:translateY(0);}
+.notice span{display:block;font-size:.85rem;margin-top:8px;opacity:.7;font-family:Montserrat;}
 
 .section-title{text-align:center;font-size:2rem;margin-bottom:40px;}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:50px;margin-bottom:120px;}
@@ -80,9 +66,9 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 .contact{text-align:center;margin-bottom:120px;line-height:2;}
 
 /* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;justify-content:center;align-items:center;z-index:50;opacity:0;pointer-events:none;transition:.4s;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;justify-content:center;align-items:center;z-index:50;opacity:0;pointer-events:none;transition:.4s;}
 .modal.active{opacity:1;pointer-events:auto;}
-.modal-content{width:90%;max-width:900px;background:#800020;padding:40px;border-radius:10px;text-align:center;position:relative;animation:fadeUp .5s ease;}
+.modal-content{width:90%;max-width:900px;background:#800020;padding:40px;border-radius:10px;text-align:center;position:relative;}
 .modal-content img{width:100%;max-height:400px;object-fit:cover;border-radius:6px;margin-bottom:25px;}
 .modal-price{font-size:1rem;letter-spacing:1px;margin-bottom:15px;opacity:.85;}
 .close-modal{position:absolute;top:15px;right:20px;font-size:1.5rem;cursor:pointer;}
@@ -90,6 +76,7 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
+
 <body>
 
 <div class="curtain left-curtain"></div>
@@ -113,10 +100,99 @@ body{font-family:Montserrat,sans-serif;overflow:hidden;scroll-behavior:smooth;ba
 
 <section class="site" id="site">
   <div class="notice" id="notice">
-    <span>Maison du Sport Private Viewing</span>
-    This digital salon presents pieces for exhibition only.  
-    No direct purchase is enabled — inquiries are handled privately.
+    Exclusive Digital Showroom Access  
+    <span>This space is designed for viewing the Maison collection experience only</span>
   </div>
+
+  <div class="section-title">World Cup Special</div>
+  <div class="products">
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="Old2-file.png.jpeg"><h3>1974 Tribute Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="CW-file.png.jpeg"><h3>Trainer Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WW-file.png.jpeg"><h3>White Trainer Tee</h3></div>
+    <div class="card"><span>EXCLUSIVELY ONLINE</span><img src="WC-file.png.jpeg"><h3>World Cup Tee</h3></div>
+  </div>
+
+  <div class="section-title">Maison Gallery</div>
+  <div class="gallery">
+    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store-file.png.jpeg"><h3>Maison Concept</h3></div>
+  </div>
+
+  <div class="section-title">Contact</div>
+  <div class="contact">
+    Email: contactmaisondusport@gmail.com<br>
+    Phone: +509 4720 9775
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <div class="close-modal" onclick="closeModal()">✕</div>
+    <img id="modalImg">
+    <h2 id="modalTitle"></h2>
+    <div class="modal-price" id="modalPrice"></div>
+    <p id="modalDesc"></p>
+  </div>
+</div>
+
+<script>
+function enterMaison(){
+  document.body.classList.add("open");
+  setTimeout(()=>{
+    document.getElementById("intro").style.display="none";
+    document.getElementById("heroWrapper").style.display="block";
+    document.body.style.overflow="auto";
+  },1200);
+}
+
+/* HERO SCROLL */
+window.addEventListener('scroll',()=>{
+ if(heroWrapper.style.display!=="block") return;
+ const p=Math.min(window.scrollY/(window.innerHeight*.8),1);
+ heroImg1.style.opacity=1-p;
+ heroImg2.style.opacity=p;
+
+ if(p<.5){
+   heroText.innerText="MAISON WHERE FOOTBALL";
+   heroText.style.opacity=1-p*2;
+ }else{
+   heroText.innerText="MEET ELEGANCE";
+   heroText.style.opacity=(p-.5)*2;
+ }
+
+ if(window.scrollY>window.innerHeight*.8){
+   site.classList.add('visible');
+   notice.classList.add('visible');
+ }
+});
+
+/* PRODUCT INFO */
+const productData={
+ "1974 Tribute Tee":{price:"$45",desc:"After the country’s second qualification, this tee pays tribute to Haiti’s first historic World Cup qualification."},
+ "Trainer Tee":{price:"$40",desc:"Special edition trainer tee made to proudly support the Grenadiers."},
+ "White Trainer Tee":{price:"$40",desc:"Classic white tee featuring federation emblems to represent national pride."},
+ "World Cup Tee":{price:"$50",desc:"Tribute shirt inspired by the kit worn during the qualification matches."},
+ "Maison Concept":{price:"Concept Project",desc:"A future physical Maison du Sport location where visitors will experience the Maison in person."}
+};
+
+/* MODAL */
+document.querySelectorAll('.card').forEach(card=>{
+ card.addEventListener('click',()=>{
+   const title=card.querySelector('h3').innerText;
+   modalImg.src=card.querySelector('img').src;
+   modalTitle.innerText=title;
+   modalPrice.innerText=productData[title].price;
+   modalDesc.innerText=productData[title].desc;
+   productModal.classList.add('active');
+ });
+});
+function closeModal(){productModal.classList.remove('active');}
+productModal.addEventListener('click',e=>{if(e.target.id==='productModal')closeModal();});
+</script>
+
+</body>
+</html>
+
 
 
 
