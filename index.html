@@ -1,152 +1,287 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FixHaiti | Ensemble pour l'Avenir</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Du Sport | Institutional Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #007AFF; --bg: #f5f7fa; --text: #1a1c1e; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; overflow: hidden; height: 100vh; }
+        :root {
+            --bg-primary: #0B1310;
+            --bg-secondary: #1F2C23;
+            --gold: #D4AF6C;
+            --gold-hover: #E1C97A;
+            --cream: #F7F3E9;
+            --cream-muted: #AFA899;
+            --transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
 
-        header { padding: 20px; display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); position: fixed; top: 0; width: 100%; z-index: 2000; box-sizing: border-box; }
-        .logo { font-weight: 800; color: var(--primary); }
-
-        #map { height: 100vh; width: 100%; z-index: 1; }
-
-        .main-button { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 18px 35px; border-radius: 50px; font-weight: 700; border: none; box-shadow: 0 15px 35px rgba(0, 122, 255, 0.3); z-index: 1000; cursor: pointer; }
-
-        /* Modals */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); backdrop-filter: blur(15px); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 450px; padding: 30px; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); text-align: center; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        .option-card { background: #f0f3f7; padding: 20px; border-radius: 20px; margin: 15px 0; border: 2px solid transparent; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px; }
-        .option-card:hover { border-color: var(--primary); }
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--cream); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Cinematic Film Grain Overlay */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.04; pointer-events: none; z-index: 9999;
+        }
+
+        section { padding: 140px 8%; border-bottom: 1px solid rgba(212, 175, 108, 0.1); }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; text-transform: uppercase; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 2.5rem 5%;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            transition: var(--transition);
+        }
+        nav.scrolled {
+            padding: 1.2rem 5%; background: rgba(11, 19, 16, 0.98);
+            border-bottom: 1px solid rgba(212, 175, 108, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .logo { font-family: 'Playfair Display', serif; color: var(--gold); font-weight: 900; font-size: 1.6rem; text-decoration: none; letter-spacing: 2px; }
+        .nav-links a { color: var(--cream-muted); text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; margin-left: 2.5rem; text-transform: uppercase; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative; background: #000; overflow: hidden;
+        }
+        .hero-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.5; filter: grayscale(100%) contrast(1.2) brightness(0.6);
+            transform: scale(1.05); transition: 10s ease-out;
+        }
+        .hero:hover .hero-img { transform: scale(1); }
+        .hero-content { position: relative; z-index: 10; max-width: 1000px; }
+        .hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.85; margin-bottom: 1.5rem; font-style: italic; }
+        .hero p { letter-spacing: 12px; color: var(--gold); text-transform: uppercase; font-size: 0.85rem; font-weight: 400; }
+
+        /* --- MDS Atelier (Jersey Cards) --- */
+        .atelier-grid {
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 40px; 
+            margin-top: 5rem;
+        }
         
-        input, select, textarea { width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f0f3f7; margin-top: 10px; font-family: inherit; box-sizing: border-box; }
-        .success-icon { font-size: 50px; color: #34C759; margin-bottom: 20px; }
+        .product-link { text-decoration: none; grid-column: span 2; display: block; }
+        
+        .product-card {
+            background: var(--bg-secondary); border: 1px solid rgba(212, 175, 108, 0.08);
+            padding: 1rem; transition: var(--transition); position: relative;
+            cursor: pointer;
+        }
+
+        /* Order: Red, Blue, White on top row. 1974, Cap centered on bottom. */
+        .product-link.bottom-row:nth-of-type(4) { grid-column: 2 / 4; }
+        .product-link.bottom-row:nth-of-type(5) { grid-column: 4 / 6; }
+
+        .product-card:hover { border-color: var(--gold); transform: translateY(-15px); }
+        
+        .img-container {
+            width: 100%; height: 500px; overflow: hidden; background: #050a08;
+            border: 1px solid rgba(212, 175, 108, 0.05);
+        }
+        .product-img {
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: grayscale(100%) brightness(0.8); transition: 0.5s;
+        }
+        .product-card:hover .product-img { filter: grayscale(0%) brightness(1); transform: scale(1.05); }
+        
+        .product-info { padding: 2rem 1rem; text-align: left; border-top: 1px solid rgba(212, 175, 108, 0.1); margin-top: 1rem; }
+        .product-card h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 5px; }
+        .status-tag { color: var(--gold); font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; }
+
+        /* --- Strategic Big Box --- */
+        .big-box-section { background: #070D0A; }
+        .divisions-container {
+            background: var(--bg-secondary); border: 1px solid var(--gold);
+            padding: 6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px;
+            position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        }
+        .div-item { 
+            border-bottom: 1px solid rgba(212, 175, 108, 0.15); 
+            padding-bottom: 30px; display: flex; flex-direction: column; align-items: flex-start; 
+        }
+        .div-item h3 { font-size: 1.8rem; letter-spacing: 1px; color: var(--cream); margin-bottom: 10px; }
+
+        /* --- Headquarters Section --- */
+        .hq-image-wrap {
+            width: 100%; height: 85vh; overflow: hidden; margin: 4rem 0;
+            border: 1px solid var(--gold); position: relative;
+        }
+        .hq-img {
+            width: 100%; height: 115%; 
+            object-fit: cover;
+            position: absolute; top: -5%; left: 0;
+            filter: grayscale(100%) contrast(1.1) brightness(0.6);
+            transition: transform 0.1s ease-out;
+        }
+        .hq-overlay {
+            position: absolute; bottom: 40px; left: 40px; text-align: left; z-index: 5;
+        }
+
+        /* --- Footer --- */
+        footer { background: #050A08; padding: 100px 8% 50px; border-top: 1px solid var(--gold); }
+        .footer-flex { display: flex; justify-content: space-between; align-items: center; }
+        .social-item { margin-top: 1.5rem; display: flex; flex-direction: column; align-items: flex-end; }
+        .social-handle { font-size: 0.8rem; letter-spacing: 2px; color: var(--cream); margin-bottom: 5px; }
+        .social-label { font-size: 0.6rem; letter-spacing: 3px; color: var(--gold); font-weight: 700; }
+
+        @media (max-width: 1100px) {
+            .atelier-grid { grid-template-columns: 1fr; }
+            .product-link, .product-link.bottom-row { grid-column: span 6 !important; }
+            .divisions-container { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 40px; }
+            .footer-flex { flex-direction: column; gap: 50px; text-align: center; }
+            .footer-flex div { text-align: center !important; }
+            .social-item { align-items: center; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">FIXHAITI</div>
-    <div style="font-size: 0.8rem; background: #fff; padding: 5px 12px; border-radius: 20px;">Live Update: 8 Expertises en cours</div>
-</header>
-
-<div id="map"></div>
-
-<button class="main-button" id="btn-main" onclick="openStep('intro')">Améliorer mon quartier</button>
-
-<div id="modal-intro" class="modal">
-    <div class="modal-content">
-        <h2>Signaler un problème</h2>
-        <div class="option-card" onclick="startAutomatedGPS()">
-            <div style="font-size: 1.5rem;">⚡</div>
-            <div><strong>Position Automatique</strong><br><small>GPS haute précision</small></div>
+    <nav id="navbar">
+        <a href="#" class="logo">MAISON DU SPORT</a>
+        <div class="nav-links">
+            <a href="#atelier">Atelier</a>
+            <a href="#divisions">Strategic Hub</a>
+            <a href="#hq">Headquarters</a>
+            <a href="#contact">Contact</a>
         </div>
-        <div class="option-card" onclick="startManualMap()">
-            <div>🗺️</div>
-            <div><strong>Choisir Manuellement</strong><br><small>Pointer sur la carte</small></div>
+    </nav>
+
+    <header class="hero">
+        <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=2000" class="hero-img" alt="Sylvio Cator Infrastructure">
+        <div class="hero-content">
+            <p style="margin-bottom: 1rem; letter-spacing: 12px;">The Institution</p>
+            <h1>The Home of <br>Haitian Football.</h1>
+            <p>Revival is not a dream. It is a responsibility.</p>
         </div>
-        <button style="background:none; border:none; color:#aaa; margin-top:10px;" onclick="closeAll()">Annuler</button>
-    </div>
-</div>
+    </header>
 
-<div id="modal-loading" class="modal">
-    <div class="modal-content">
-        <div class="spinner">🛰️</div>
-        <h2>Localisation en cours...</h2>
-        <p>Nous connectons votre appareil aux satellites pour une précision maximale.</p>
-    </div>
-</div>
-
-<div id="modal-form" class="modal">
-    <div class="modal-content" style="text-align: left;">
-        <h2>Détails du rapport</h2>
-        <label>TYPE D'INFRASTRUCTURE</label>
-        <select id="type"><option>Route / Nid-de-poule</option><option>Drainage / Caniveau</option><option>Eau / Fuite</option></select>
+    <section id="atelier">
+        <span style="color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">Curated Equipment</span>
+        <h2 style="font-size: 3.5rem; margin-top: 15px;">MDS Atelier</h2>
         
-        <label style="display:block; margin-top:20px;">PREUVE VISUELLE</label>
-        <input type="file" accept="image/*,video/*" capture="environment">
+        <div class="atelier-grid">
+            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link">
+                <div class="product-card">
+                    <div class="img-container"><img src="WC26-Red.png.jpeg" class="product-img" alt="Haiti National Jersey Red"></div>
+                    <div class="product-info"><h3>National Jersey — Red</h3><span class="status-tag">Coming Soon</span></div>
+                </div>
+            </a>
+            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link">
+                <div class="product-card">
+                    <div class="img-container"><img src="Blue-file.png .jpeg" class="product-img" alt="Haiti National Jersey Blue"></div>
+                    <div class="product-info"><h3>National Jersey — Blue</h3><span class="status-tag">Coming Soon</span></div>
+                </div>
+            </a>
+            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link">
+                <div class="product-card">
+                    <div class="img-container"><img src="WC26-white.png .jpeg" class="product-img" alt="Haiti National Jersey White"></div>
+                    <div class="product-info"><h3>National Jersey — White</h3><span class="status-tag">Coming Soon</span></div>
+                </div>
+            </a>
+            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link bottom-row">
+                <div class="product-card">
+                    <div class="img-container"><img src="1974shirt-png.png" class="product-img" alt="1974 Heritage Tee"></div>
+                    <div class="product-info"><h3>1974 Heritage</h3><span class="status-tag">Coming Soon</span></div>
+                </div>
+            </a>
+            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link bottom-row">
+                <div class="product-card">
+                    <div class="img-container"><img src="WC26-cap.png.jpeg" class="product-img" alt="Haitian Federation Cap"></div>
+                    <div class="product-info"><h3>WC26 Cap</h3><span class="status-tag">Coming Soon</span></div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="divisions" class="big-box-section">
+        <span style="color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">Infrastructure</span>
+        <h2 style="font-size: 3.5rem; margin: 15px 0 60px 0;">Strategic Pillars</h2>
         
-        <button class="main-button" style="position:static; transform:none; width:100%; margin-top:20px;" onclick="openStep('success')">Envoyer</button>
-    </div>
-</div>
+        <div class="divisions-container">
+            <div class="div-item"><h3>Commercial</h3><span class="status-tag">Soon</span></div>
+            <div class="div-item"><h3>Media Hub</h3><span class="status-tag">Soon</span></div>
+            <div class="div-item"><h3>Partnerships</h3><span class="status-tag">Soon</span></div>
+        </div>
+    </section>
 
-<div id="modal-success" class="modal">
-    <div class="modal-content">
-        <div class="success-icon">✓</div>
-        <h2>Rapport Envoyé</h2>
-        <p>Merci ! Votre signalement est maintenant en file d'attente pour validation par Seb.</p>
-        <button class="main-button" style="position:static; transform:none; width:100%;" onclick="location.reload()">Fermer</button>
-    </div>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    const map = L.map('map', {zoomControl: false}).setView([18.5392, -72.3350], 13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
-
-    let userMarker;
-
-    function openStep(s) {
-        closeAll();
-        document.getElementById('modal-' + s).style.display = 'flex';
-    }
-
-    function closeAll() {
-        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-    }
-
-    // THE REAL GPS LOGIC
-    function startAutomatedGPS() {
-        openStep('loading');
+    <section id="hq" style="text-align: center;">
+        <span style="color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">Physical Headquarters</span>
+        <h2 style="font-size: 3.5rem; margin-top: 15px;">MDS Operations</h2>
+        <p style="color: var(--cream-muted); margin-top: 10px; text-transform: uppercase; letter-spacing: 2px;">Port-au-Prince, Haiti</p>
         
-        if (!navigator.geolocation) {
-            alert("Votre navigateur ne supporte pas le GPS.");
-            openStep('intro');
-            return;
-        }
+        <div class="hq-image-wrap">
+            <img src="STOREPNG.png" class="hq-img" id="parallaxHq" alt="MDS Headquarters Store Front">
+            <div class="hq-overlay">
+                <span class="status-tag" style="background: var(--gold); color: var(--bg-primary); padding: 10px 20px;">Opening — Coming Soon</span>
+            </div>
+        </div>
+        
+        <p style="font-size: 1.5rem; font-family: 'Playfair Display', serif; font-style: italic; max-width: 800px; margin: 0 auto;">
+            "The future physical home of Haitian football operations. A center for strategy, commerce, and national pride."
+        </p>
+    </section>
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
+    <footer id="contact">
+        <div class="footer-flex">
+            <div>
+                <h2 class="logo" style="font-size: 3rem;">MDS</h2>
+                <p style="color: var(--cream-muted); margin-top: 1rem; letter-spacing: 1px;">The Strategic Hub of Haitian Football.</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 1.5rem; font-weight: 700;">DIRECT CONTACT</p>
+                <p style="font-size: 1.2rem; margin-bottom: 5px;">+509 4720 9775</p>
+                <p style="color: var(--cream-muted);">contact@maisondusport.com</p>
                 
-                // 1. Move the map instantly
-                map.flyTo([lat, lng], 18, { duration: 2 });
-                
-                // 2. Drop a temporary "New Report" pin
-                if(userMarker) map.removeLayer(userMarker);
-                userMarker = L.circleMarker([lat, lng], {
-                    radius: 10, fillColor: "#007AFF", color: "#fff", weight: 3, fillOpacity: 1
-                }).addTo(map);
+                <div class="social-item">
+                    <span class="social-label">INSTAGRAM</span>
+                    <span class="social-handle">@mdshaiti</span>
+                </div>
+                <div class="social-item" style="margin-top: 1rem;">
+                    <span class="social-label">FACEBOOK</span>
+                    <span class="social-handle">Maison Du Sport</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 6rem; border-top: 1px solid rgba(212, 175, 108, 0.1); padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.6rem; letter-spacing: 4px; opacity: 0.5;">
+            <span>© 2026 MAISON DU SPORT</span>
+            <span>STRUCTURE · LEGACY · AUTHORITY</span>
+        </div>
+    </footer>
 
-                // 3. Go straight to form
-                setTimeout(() => openStep('form'), 2000);
-            },
-            (error) => {
-                alert("Erreur GPS : " + error.message + ". Veuillez choisir manuellement.");
-                openStep('intro');
-            },
-            { enableHighAccuracy: true, timeout: 10000 }
-        );
-    }
-
-    function startManualMap() {
-        closeAll();
-        alert("Déplacez la carte. Cliquez sur le bouton 'Confirmer' quand vous êtes sur le point.");
-        // Logic for a manual confirm button could go here
-        openStep('form');
-    }
-</script>
-
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const hqImg = document.getElementById('parallaxHq');
+            
+            if (window.scrollY > 100) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+            
+            let scrollPos = window.pageYOffset;
+            let hqOffset = document.getElementById('hq').offsetTop;
+            if (scrollPos > hqOffset - 1000) {
+                let speed = 0.12;
+                hqImg.style.transform = translateY(${(scrollPos - hqOffset) * speed}px);
+            }
+        });
+    </script>
 </body>
 </html>
-
-
-
 
