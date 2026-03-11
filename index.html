@@ -1,462 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maison du Sport — Digital Showroom</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FixHaiti | Ensemble pour l'Avenir</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #007AFF; --bg: #f5f7fa; --text: #1a1c1e; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; overflow: hidden; height: 100vh; }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+        header { padding: 20px; display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); position: fixed; top: 0; width: 100%; z-index: 2000; box-sizing: border-box; }
+        .logo { font-weight: 800; color: var(--primary); }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
+        #map { height: 100vh; width: 100%; z-index: 1; }
 
-body{
-  font-family:Montserrat,sans-serif;
-  scroll-behavior:smooth;
-  background:#0b1a2b;
-  color:#D4AF37;
-  overflow:hidden; /* locked during intro */
-}
+        .main-button { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 18px 35px; border-radius: 50px; font-weight: 700; border: none; box-shadow: 0 15px 35px rgba(0, 122, 255, 0.3); z-index: 1000; cursor: pointer; }
 
-/* INTRO */
-.intro{
-  position:fixed;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:10;
-  overflow:hidden;
-  transition:opacity 1.2s ease;
-}
-.intro.fade-out{opacity:0;}
-
-.intro video{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.85;
-  preload:metadata;
-}
-
-.intro h1{
-  font-family:'Playfair Display',serif;
-  font-size:3.8rem;
-  text-align:center;
-  opacity:0;
-  animation:fadeUp 2s forwards .5s;
-  z-index:1;
-}
-
-.enter-btn{
-  margin-top:3rem;
-  padding:1rem 3.5rem;
-  border:1px solid #f6f1e8;
-  background:none;
-  color:#f6f1e8;
-  font-size:1.1rem;
-  letter-spacing:2px;
-  cursor:pointer;
-  opacity:0;
-  animation:fadeUp 2s forwards 2s;
-  transition:.4s;
-  z-index:1;
-}
-.enter-btn:hover{background:#f6f1e8;color:#0b1a2b;}
-
-/* CURTAINS */
-.curtain{
-  position:fixed;
-  top:0;
-  width:50%;
-  height:100%;
-  background:#0b1a2b;
-  z-index:9;
-  transition:1.6s cubic-bezier(.77,0,.18,1);
-}
-.left-curtain{left:0}
-.right-curtain{right:0}
-.open .left-curtain{transform:translateX(-100%)}
-.open .right-curtain{transform:translateX(100%)}
-
-/* HERO */
-.hero-wrapper{position:relative;height:200vh;display:none;}
-.hero-section{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;}
-.hero-img{position:absolute;width:100%;height:100%;object-fit:cover;transition:opacity 1s ease;}
-.hero-text{
-  position:absolute;
-  width:100%;
-  top:30%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-family:'Playfair Display',serif;
-  font-size:3rem;
-  text-align:center;
-  z-index:2;
-  transition:opacity .6s ease, color .6s ease, text-shadow .6s ease, top .6s ease;
-}
-
-/* SITE */
-.site{
-  opacity:0;
-  transition:opacity 1.5s ease;
-  padding:60px 10%;
-  max-width:1300px;
-  margin:auto;
-  background:#800020;
-}
-.site.visible{opacity:1}
-
-.logo{position:fixed;top:25px;left:40px;width:210px;opacity:.85;z-index:2;}
-
-/* NOTICE */
-.notice{
-  text-align:center;
-  margin:0 auto 80px;
-  padding:25px 40px;
-  max-width:700px;
-  font-family:'Playfair Display',serif;
-  letter-spacing:1px;
-  font-size:1.1rem;
-  border:1px solid rgba(255,255,255,0.4);
-  background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
-  backdrop-filter:blur(6px);
-  box-shadow:0 0 30px rgba(255,255,255,0.08);
-  opacity:0;
-  transform:translateY(20px);
-  transition:opacity 1.2s ease, transform 1.2s ease;
-}
-.notice.visible{opacity:1;transform:translateY(0);}
-.notice span{display:block;font-size:.85rem;margin-top:8px;opacity:.7;font-family:Montserrat;}
-
-.section-title{text-align:center;font-size:2rem;margin-bottom:40px;}
-
-/* PRODUCTS */
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:50px;margin-bottom:120px;}
-.card{background:#a0002b;padding:25px;border-radius:6px;text-align:center;position:relative;transition:.4s;color:#f6f1e8;cursor:pointer;}
-.card img{width:100%;border-radius:4px;margin-bottom:15px;transition:.4s;}
-.card span{position:absolute;top:12px;left:12px;font-size:.65rem;background:#5a0015;padding:4px 8px;}
-.card .price{position:absolute;top:12px;right:12px;font-size:.8rem;background:#5a0015;padding:4px 8px;}
-.card:hover{transform:translateY(-10px) scale(1.05);}
-.card:hover img{transform:scale(1.1);}
-.card::after{
-  content:"Inquire";
-  position:absolute;
-  bottom:10px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:6px 14px;
-  background:rgba(0,0,0,.6);
-  font-size:.85rem;
-  border-radius:20px;
-  opacity:0;
-  transition:.3s;
-  letter-spacing:1px;
-}
-.card:hover::after{opacity:1;}
-
-/* CARD ANNOUNCEMENT */
-.card-wrapper {position: relative;display: inline-block;}
-.card-announcement {
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #D4AF37;
-  color: #0b1a2b;
-  padding: 4px 14px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  z-index: 5;
-}
-
-/* GALLERY */
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:60px;margin-bottom:120px;}
-.contact{text-align:center;margin-bottom:120px;line-height:2;}
-
-.philosophy{
-  background:#0b1a2b;
-  padding:40px 30px;
-  border-left:4px solid #d4af37;
-  font-size:1.1rem;
-  line-height:1.8;
-  color:#d4af37;
-  font-style:italic;
-  max-width:1000px;
-  margin:0 auto 120px;
-  text-align:center;
-}
-
-/* NAVIGATION — MOBILE SWIPE FIX */
-.top-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:flex-start;
-  gap:40px;
-  padding:20px 20px;
-  background:rgba(11,26,43,0.95);
-  backdrop-filter:blur(8px);
-  z-index:50;
-  transform:translateY(-100%);
-  transition:transform .6s ease;
-  overflow-x:auto;
-  white-space:nowrap;
-  scrollbar-width:none;
-}
-.top-nav::-webkit-scrollbar{display:none;}
-.top-nav.visible{transform:translateY(0);}
-.top-nav a{
-  text-decoration:none;
-  color:#D4AF37;
-  font-family:'Playfair Display',serif;
-  letter-spacing:1px;
-  font-size:1rem;
-  transition:.3s;
-  flex:0 0 auto;
-}
-.top-nav a:hover{opacity:.6;}
-.top-nav a.active{text-decoration:underline;}
-
-.gallery-overlay {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index: 100;
-  flex-direction: column;
-  padding: 20px;
-  text-align: center;
-  color: #f6f1e8;
-}
-.gallery-overlay img {
-  max-width: 90%;
-  max-height: 70%;
-  border-radius: 6px;
-  margin-bottom: 20px;
-}
-.gallery-overlay p {
-  font-size: 1.1rem;
-  max-width: 800px;
-  line-height: 1.6;
-}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-</style>
+        /* Modals */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); backdrop-filter: blur(15px); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; width: 100%; max-width: 450px; padding: 30px; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); text-align: center; }
+        
+        .option-card { background: #f0f3f7; padding: 20px; border-radius: 20px; margin: 15px 0; border: 2px solid transparent; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px; }
+        .option-card:hover { border-color: var(--primary); }
+        
+        input, select, textarea { width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f0f3f7; margin-top: 10px; font-family: inherit; box-sizing: border-box; }
+        .success-icon { font-size: 50px; color: #34C759; margin-bottom: 20px; }
+    </style>
 </head>
-
 <body>
 
-<div class="curtain left-curtain"></div>
-<div class="curtain right-curtain"></div>
+<header>
+    <div class="logo">FIXHAITI</div>
+    <div style="font-size: 0.8rem; background: #fff; padding: 5px 12px; border-radius: 20px;">Live Update: 8 Expertises en cours</div>
+</header>
 
-<section class="intro" id="intro">
-  <video autoplay muted loop playsinline>
-    <source src="Cinematic_video_focusing_202602011237_ga4dn.mp4" type="video/mp4">
-  </video> 
-  <h1>Welcome to Maison du Sport</h1>
-  <button class="enter-btn" onclick="enterMaison()">ENTER THE MAISON</button>
-</section>
+<div id="map"></div>
 
-<img src="Maisondusport-file.png" class="logo">
+<button class="main-button" id="btn-main" onclick="openStep('intro')">Améliorer mon quartier</button>
 
-<nav class="top-nav" id="topNav">
-  <a href="#philosophy">Philosophy</a>
-  <a href="#products">Products</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<div class="hero-wrapper" id="heroWrapper">
-  <div class="hero-section">
-    <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1">
-    <img src="Sit-png.png" class="hero-img" id="heroImg2" style="opacity:0">
-    <div class="hero-text" id="heroText">MAISON WHERE FOOTBALL</div>
-  </div>
+<div id="modal-intro" class="modal">
+    <div class="modal-content">
+        <h2>Signaler un problème</h2>
+        <div class="option-card" onclick="startAutomatedGPS()">
+            <div style="font-size: 1.5rem;">⚡</div>
+            <div><strong>Position Automatique</strong><br><small>GPS haute précision</small></div>
+        </div>
+        <div class="option-card" onclick="startManualMap()">
+            <div>🗺️</div>
+            <div><strong>Choisir Manuellement</strong><br><small>Pointer sur la carte</small></div>
+        </div>
+        <button style="background:none; border:none; color:#aaa; margin-top:10px;" onclick="closeAll()">Annuler</button>
+    </div>
 </div>
 
-<section class="site" id="site">
-  <div class="notice" id="notice">
-    Exclusive Digital Showroom Access  
-    <span>This space is designed for viewing the Maison collection experience only</span>
-  </div>
-
-  <div id="philosophy" class="section-title">Maison Philosophy</div>
-  <div class="philosophy">
-    At Maison du Sport, we believe that every great moment on the field begins with vision, discipline, and passion. Our work celebrates not just the game, but the dedication, culture, and spirit that elevate it. Guided by a higher hand, we honor excellence in every stitch, every detail, creating a space where sport meets elegance and ambition, and ambition meets purpose, and purpose meets the hand of God.
-  </div>
-
-  <div id="products" class="section-title"> World Cup Special</div>
-  <div class="products">  
-    <!-- White Kit -->
-    <div class="card-wrapper">
-      <div class="card-announcement">First 20 Pieces — $85</div>
-      <div class="card">
-        <span>EXCLUSIVELY ONLINE</span>
-        <span class="price">$85</span>
-        <img src="WC26-white.png .jpeg">
-        <h3>Official Haiti Men's World Cup Kit-White</h3>
-      </div>
+<div id="modal-loading" class="modal">
+    <div class="modal-content">
+        <div class="spinner">🛰️</div>
+        <h2>Localisation en cours...</h2>
+        <p>Nous connectons votre appareil aux satellites pour une précision maximale.</p>
     </div>
-
-    <!-- Red Kit -->
-    <div class="card-wrapper">
-      <div class="card-announcement">First 20 Pieces — $85</div>
-      <div class="card">
-        <span>EXCLUSIVELY ONLINE</span>
-        <span class="price">$85</span>
-        <img src="WC26-Red.png.jpeg">
-        <h3>Official Haiti Men's World Cup Kit-Red</h3>
-      </div>
-    </div>
-
-    <!-- Blue Kit -->
-    <div class="card-wrapper">
-      <div class="card-announcement">First 20 Pieces — $85</div>
-      <div class="card">
-        <span>EXCLUSIVELY ONLINE</span>
-        <span class="price">$85</span>
-        <img src="Blue-file.png .jpeg">
-        <h3>Official Haiti Men's World Cup Kit-Blue</h3>
-      </div>
-    </div>
-
-    <!-- 1974 Kit — NO promo -->
-    <div class="card">
-      <span>EXCLUSIVELY ONLINE</span>
-      <span class="price">$120</span>
-      <img src="1974shirt-png.png">
-      <h3>Red Haiti Men's Soccer Jersey- 1974 Commemorative Edition</h3>
-    </div>
-    
-    <!-- Cap -->
-    <div class="card">
-      <span>EXCLUSIVELY ONLINE</span>
-      <span class="price">$40</span>
-      <img src="Haiticap-png.png">
-      <h3>Haiti's World Cup Cap</h3>
-    </div>
-  </div>
-
-  <div id="gallery" class="section-title">Maison Gallery</div>
-  <div class="gallery">
-    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="STORE.PNG.png"><h3>Maison Concept</h3></div>
-    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store2.png"><h3>Maison Concept</h3></div>
-    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store3.png"><h3>Maison Concept</h3></div>
-    <div class="card"><span>CONCEPT (COMING SOON)</span><img src="Store4.png"><h3>Maison Concept</h3></div>
-  </div>
-
-  <div id="contact" class="section-title">Contact</div>
-  <div class="contact">
-   Email:contactmaisondusport@gmail.com<br> 
-  Phone: +509 4720 9775
-  </div>
-</section>
-
-<div class="gallery-overlay" id="galleryOverlay">
-  <img id="overlayImg" src="">
-  <p id="overlayDesc"></p>
 </div>
 
+<div id="modal-form" class="modal">
+    <div class="modal-content" style="text-align: left;">
+        <h2>Détails du rapport</h2>
+        <label>TYPE D'INFRASTRUCTURE</label>
+        <select id="type"><option>Route / Nid-de-poule</option><option>Drainage / Caniveau</option><option>Eau / Fuite</option></select>
+        
+        <label style="display:block; margin-top:20px;">PREUVE VISUELLE</label>
+        <input type="file" accept="image/*,video/*" capture="environment">
+        
+        <button class="main-button" style="position:static; transform:none; width:100%; margin-top:20px;" onclick="openStep('success')">Envoyer</button>
+    </div>
+</div>
+
+<div id="modal-success" class="modal">
+    <div class="modal-content">
+        <div class="success-icon">✓</div>
+        <h2>Rapport Envoyé</h2>
+        <p>Merci ! Votre signalement est maintenant en file d'attente pour validation par Seb.</p>
+        <button class="main-button" style="position:static; transform:none; width:100%;" onclick="location.reload()">Fermer</button>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const intro = document.getElementById('intro');
-const heroWrapper = document.getElementById('heroWrapper');
-const heroImg1 = document.getElementById('heroImg1');
-const heroImg2 = document.getElementById('heroImg2');
-const heroText = document.getElementById('heroText');
-const site = document.getElementById('site');
-const notice = document.getElementById('notice');
-const topNav = document.getElementById('topNav');
+    const map = L.map('map', {zoomControl: false}).setView([18.5392, -72.3350], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
-function enterMaison(){
-  document.body.classList.add("open");
-  intro.classList.add('fade-out');
-  setTimeout(()=>{
-    intro.style.display="none";
-    heroWrapper.style.display="block";
-    document.body.style.overflow="auto";
-  },1200);
-}
+    let userMarker;
 
-window.addEventListener('scroll',()=>{
-  if(heroWrapper.style.display!=="block") return;
-  const p=Math.min(window.scrollY/(window.innerHeight*.8),1);
-  heroImg1.style.opacity=1-p;
-  heroImg2.style.opacity=p;
-
-  if (p < 0.5) {
-    heroText.innerText = "MAISON WHERE FOOTBALL";
-    heroText.style.color = "#D4AF37"; // Gold
-    heroText.style.textShadow = "0 0 20px rgba(212,175,55,0.6)";
-    heroText.style.opacity = 1 - (p*2);
-    heroText.style.top = "30%";
-  } else {
-    heroText.innerText = "MEETS ELEGANCE";
-    heroText.style.color = "#003153";
-    heroText.style.textShadow = "0 0 15px rgba(0,49,83,0.5)";
-    heroText.style.top = "64%";
-    heroText.style.opacity = (p-0.5)*2;
-  }
-
-  if(window.scrollY>window.innerHeight*.8){
-    site.classList.add('visible');
-    notice.classList.add('visible');
-    topNav.classList.add('visible');
-  } else {
-    topNav.classList.remove('visible');
-    heroText.style.top = "30%";
-  }
-});
-
-// Card click events + gallery overlay
-document.querySelectorAll('.card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const title = card.querySelector('h3').innerText;
-    if(title === "Maison Concept"){
-      document.getElementById('overlayImg').src = card.querySelector('img').src;
-      document.getElementById('overlayDesc').innerText =
-        "A concept soon to be realized that will give our members an experience of the Maison in Haiti";
-      document.getElementById('galleryOverlay').style.display = "flex";
-    } else {
-      window.open('https://www.instagram.com/mdshaiti','_blank');
+    function openStep(s) {
+        closeAll();
+        document.getElementById('modal-' + s).style.display = 'flex';
     }
-  });
-});
 
-document.getElementById('galleryOverlay').addEventListener('click', ()=>{
-  document.getElementById('galleryOverlay').style.display = "none";
-});
-
-// Navigation active state on scroll
-window.addEventListener('scroll', ()=>{
-  let scrollPos = window.scrollY + window.innerHeight/2;
-  document.querySelectorAll('.top-nav a').forEach(link=>{
-    const target = document.querySelector(link.getAttribute('href'));
-    if(target && scrollPos >= target.offsetTop && scrollPos < target.offsetTop + target.offsetHeight){
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
+    function closeAll() {
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     }
-  });
-});
 
-// Lazy loading for images
-document.querySelectorAll('img').forEach(img=>{ img.loading='lazy'; });
+    // THE REAL GPS LOGIC
+    function startAutomatedGPS() {
+        openStep('loading');
+        
+        if (!navigator.geolocation) {
+            alert("Votre navigateur ne supporte pas le GPS.");
+            openStep('intro');
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                
+                // 1. Move the map instantly
+                map.flyTo([lat, lng], 18, { duration: 2 });
+                
+                // 2. Drop a temporary "New Report" pin
+                if(userMarker) map.removeLayer(userMarker);
+                userMarker = L.circleMarker([lat, lng], {
+                    radius: 10, fillColor: "#007AFF", color: "#fff", weight: 3, fillOpacity: 1
+                }).addTo(map);
+
+                // 3. Go straight to form
+                setTimeout(() => openStep('form'), 2000);
+            },
+            (error) => {
+                alert("Erreur GPS : " + error.message + ". Veuillez choisir manuellement.");
+                openStep('intro');
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    }
+
+    function startManualMap() {
+        closeAll();
+        alert("Déplacez la carte. Cliquez sur le bouton 'Confirmer' quand vous êtes sur le point.");
+        // Logic for a manual confirm button could go here
+        openStep('form');
+    }
 </script>
 
 </body>
 </html>
-
 
 
 
