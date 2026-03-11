@@ -1,287 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maison Du Sport | Institutional Hub</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-primary: #0B1310;
-            --bg-secondary: #1F2C23;
-            --gold: #D4AF6C;
-            --gold-hover: #E1C97A;
-            --cream: #F7F3E9;
-            --cream-muted: #AFA899;
-            --transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison du Sport — Digital Showroom</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            background-color: var(--bg-primary); 
-            color: var(--cream); 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-        /* Cinematic Film Grain Overlay */
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.04; pointer-events: none; z-index: 9999;
-        }
+<style>
 
-        section { padding: 140px 8%; border-bottom: 1px solid rgba(212, 175, 108, 0.1); }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; text-transform: uppercase; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        /* --- Navigation --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 2.5rem 5%;
-            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
-            transition: var(--transition);
-        }
-        nav.scrolled {
-            padding: 1.2rem 5%; background: rgba(11, 19, 16, 0.98);
-            border-bottom: 1px solid rgba(212, 175, 108, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        .logo { font-family: 'Playfair Display', serif; color: var(--gold); font-weight: 900; font-size: 1.6rem; text-decoration: none; letter-spacing: 2px; }
-        .nav-links a { color: var(--cream-muted); text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; margin-left: 2.5rem; text-transform: uppercase; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
+body{
+font-family:Montserrat,sans-serif;
+overflow:hidden;
+scroll-behavior:smooth;
+background:#0b1a2b;
+color:#D4AF37;
+}
 
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; position: relative; background: #000; overflow: hidden;
-        }
-        .hero-img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0.5; filter: grayscale(100%) contrast(1.2) brightness(0.6);
-            transform: scale(1.05); transition: 10s ease-out;
-        }
-        .hero:hover .hero-img { transform: scale(1); }
-        .hero-content { position: relative; z-index: 10; max-width: 1000px; }
-        .hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.85; margin-bottom: 1.5rem; font-style: italic; }
-        .hero p { letter-spacing: 12px; color: var(--gold); text-transform: uppercase; font-size: 0.85rem; font-weight: 400; }
+/* INTRO */
 
-        /* --- MDS Atelier (Jersey Cards) --- */
-        .atelier-grid {
-            display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 40px; 
-            margin-top: 5rem;
-        }
-        
-        .product-link { text-decoration: none; grid-column: span 2; display: block; }
-        
-        .product-card {
-            background: var(--bg-secondary); border: 1px solid rgba(212, 175, 108, 0.08);
-            padding: 1rem; transition: var(--transition); position: relative;
-            cursor: pointer;
-        }
+.intro{
+position:fixed;
+inset:0;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:10;
+overflow:hidden;
+}
 
-        /* Order: Red, Blue, White on top row. 1974, Cap centered on bottom. */
-        .product-link.bottom-row:nth-of-type(4) { grid-column: 2 / 4; }
-        .product-link.bottom-row:nth-of-type(5) { grid-column: 4 / 6; }
+.intro video{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:.85;
+}
 
-        .product-card:hover { border-color: var(--gold); transform: translateY(-15px); }
-        
-        .img-container {
-            width: 100%; height: 500px; overflow: hidden; background: #050a08;
-            border: 1px solid rgba(212, 175, 108, 0.05);
-        }
-        .product-img {
-            width: 100%; height: 100%; object-fit: cover; 
-            filter: grayscale(100%) brightness(0.8); transition: 0.5s;
-        }
-        .product-card:hover .product-img { filter: grayscale(0%) brightness(1); transform: scale(1.05); }
-        
-        .product-info { padding: 2rem 1rem; text-align: left; border-top: 1px solid rgba(212, 175, 108, 0.1); margin-top: 1rem; }
-        .product-card h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 5px; }
-        .status-tag { color: var(--gold); font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; }
+.intro h1{
+font-family:'Playfair Display',serif;
+font-size:3.8rem;
+text-align:center;
+opacity:0;
+animation:fadeUp 2s forwards .5s;
+z-index:1;
+}
 
-        /* --- Strategic Big Box --- */
-        .big-box-section { background: #070D0A; }
-        .divisions-container {
-            background: var(--bg-secondary); border: 1px solid var(--gold);
-            padding: 6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px;
-            position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-        }
-        .div-item { 
-            border-bottom: 1px solid rgba(212, 175, 108, 0.15); 
-            padding-bottom: 30px; display: flex; flex-direction: column; align-items: flex-start; 
-        }
-        .div-item h3 { font-size: 1.8rem; letter-spacing: 1px; color: var(--cream); margin-bottom: 10px; }
+.enter-btn{
+margin-top:3rem;
+padding:1rem 3.5rem;
+border:1px solid #f6f1e8;
+background:none;
+color:#f6f1e8;
+font-size:1.1rem;
+letter-spacing:2px;
+cursor:pointer;
+opacity:0;
+animation:fadeUp 2s forwards 2s;
+transition:.4s;
+z-index:1;
+}
 
-        /* --- Headquarters Section --- */
-        .hq-image-wrap {
-            width: 100%; height: 85vh; overflow: hidden; margin: 4rem 0;
-            border: 1px solid var(--gold); position: relative;
-        }
-        .hq-img {
-            width: 100%; height: 115%; 
-            object-fit: cover;
-            position: absolute; top: -5%; left: 0;
-            filter: grayscale(100%) contrast(1.1) brightness(0.6);
-            transition: transform 0.1s ease-out;
-        }
-        .hq-overlay {
-            position: absolute; bottom: 40px; left: 40px; text-align: left; z-index: 5;
-        }
+.enter-btn:hover{
+background:#f6f1e8;
+color:#0b1a2b;
+}
 
-        /* --- Footer --- */
-        footer { background: #050A08; padding: 100px 8% 50px; border-top: 1px solid var(--gold); }
-        .footer-flex { display: flex; justify-content: space-between; align-items: center; }
-        .social-item { margin-top: 1.5rem; display: flex; flex-direction: column; align-items: flex-end; }
-        .social-handle { font-size: 0.8rem; letter-spacing: 2px; color: var(--cream); margin-bottom: 5px; }
-        .social-label { font-size: 0.6rem; letter-spacing: 3px; color: var(--gold); font-weight: 700; }
+.curtain{
+position:fixed;
+top:0;
+width:50%;
+height:100%;
+background:#0b1a2b;
+z-index:9;
+transition:1.6s cubic-bezier(.77,0,.18,1);
+}
 
-        @media (max-width: 1100px) {
-            .atelier-grid { grid-template-columns: 1fr; }
-            .product-link, .product-link.bottom-row { grid-column: span 6 !important; }
-            .divisions-container { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 40px; }
-            .footer-flex { flex-direction: column; gap: 50px; text-align: center; }
-            .footer-flex div { text-align: center !important; }
-            .social-item { align-items: center; }
-        }
-    </style>
+.left-curtain{left:0}
+.right-curtain{right:0}
+
+.open .left-curtain{transform:translateX(-100%)}
+.open .right-curtain{transform:translateX(100%)}
+
+
+/* HERO */
+
+.hero-wrapper{
+position:relative;
+height:200vh;
+}
+
+.hero-section{
+position:sticky;
+top:0;
+height:100vh;
+width:100%;
+overflow:hidden;
+}
+
+.hero-img{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+transition:opacity 1s ease;
+}
+
+.hero-text{
+position:absolute;
+width:100%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-family:'Playfair Display',serif;
+font-size:3rem;
+text-align:center;
+z-index:2;
+transition:opacity .6s ease,text-shadow .3s ease;
+color:#D4AF37;
+text-shadow:0 0 20px rgba(212,175,55,0.6);
+}
+
+
+/* SITE */
+
+.site{
+opacity:0;
+transition:opacity 1.5s ease;
+padding:60px 10%;
+max-width:1300px;
+margin:auto;
+background:#800020;
+}
+
+.site.visible{opacity:1}
+
+.logo{
+position:fixed;
+top:25px;
+left:40px;
+width:210px;
+opacity:.85;
+z-index:2;
+}
+
+
+/* NOTICE */
+
+.notice{
+text-align:center;
+margin:0 auto 80px;
+padding:25px 40px;
+max-width:700px;
+font-family:'Playfair Display',serif;
+letter-spacing:1px;
+font-size:1.1rem;
+border:1px solid rgba(255,255,255,0.4);
+background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
+backdrop-filter:blur(6px);
+box-shadow:0 0 30px rgba(255,255,255,0.08);
+opacity:0;
+transform:translateY(20px);
+transition:opacity 1.2s ease, transform 1.2s ease;
+}
+
+.notice.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+.notice span{
+display:block;
+font-size:.85rem;
+margin-top:8px;
+opacity:.7;
+font-family:Montserrat;
+}
+
+.section-title{
+text-align:center;
+font-size:2rem;
+margin-bottom:40px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:50px;
+margin-bottom:120px;
+}
+
+.card{
+background:#a0002b;
+padding:25px;
+border-radius:6px;
+text-align:center;
+position:relative;
+transition:.4s;
+color:#f6f1e8;
+cursor:pointer;
+}
+
+.card img{
+width:100%;
+border-radius:4px;
+margin-bottom:15px;
+transition:.4s;
+}
+
+.card span{
+position:absolute;
+top:12px;
+left:12px;
+font-size:.65rem;
+background:#5a0015;
+padding:4px 8px;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.05);
+}
+
+.card:hover img{
+transform:scale(1.1);
+}
+
+.card::after{
+content:"View Details";
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+padding:6px 12px;
+background:rgba(0,0,0,.5);
+font-size:.85rem;
+border-radius:4px;
+opacity:0;
+transition:.3s;
+}
+
+.card:hover::after{
+opacity:1;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:60px;
+margin-bottom:120px;
+}
+
+.contact{
+text-align:center;
+margin-bottom:120px;
+line-height:2;
+}
+
+
+/* PHILOSOPHY */
+
+.philosophy{
+background:#0b1a2b;
+padding:40px 30px;
+border-left:4px solid #d4af37;
+font-size:1.1rem;
+line-height:1.8;
+color:#d4af37;
+font-style:italic;
+max-width:1000px;
+margin:auto;
+text-align:center;
+}
+
+
+/* MODAL */
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.9);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:50;
+opacity:0;
+pointer-events:none;
+transition:.4s;
+}
+
+.modal.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.modal-content{
+width:90%;
+max-width:900px;
+background:#800020;
+padding:40px;
+border-radius:10px;
+text-align:center;
+position:relative;
+}
+
+.modal-content img{
+width:100%;
+max-height:400px;
+object-fit:cover;
+border-radius:6px;
+margin-bottom:25px;
+}
+
+.modal-price{
+font-size:1rem;
+letter-spacing:1px;
+margin-bottom:15px;
+opacity:.85;
+}
+
+.close-modal{
+position:absolute;
+top:15px;
+right:20px;
+font-size:1.5rem;
+cursor:pointer;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+</style>
 </head>
+
+
 <body>
 
-    <nav id="navbar">
-        <a href="#" class="logo">MAISON DU SPORT</a>
-        <div class="nav-links">
-            <a href="#atelier">Atelier</a>
-            <a href="#divisions">Strategic Hub</a>
-            <a href="#hq">Headquarters</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
+<div class="curtain left-curtain"></div>
+<div class="curtain right-curtain"></div>
 
-    <header class="hero">
-        <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=2000" class="hero-img" alt="Sylvio Cator Infrastructure">
-        <div class="hero-content">
-            <p style="margin-bottom: 1rem; letter-spacing: 12px;">The Institution</p>
-            <h1>The Home of <br>Haitian Football.</h1>
-            <p>Revival is not a dream. It is a responsibility.</p>
-        </div>
-    </header>
+<section class="intro" id="intro">
 
-    <section id="atelier">
-        <span style="color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">Curated Equipment</span>
-        <h2 style="font-size: 3.5rem; margin-top: 15px;">MDS Atelier</h2>
-        
-        <div class="atelier-grid">
-            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link">
-                <div class="product-card">
-                    <div class="img-container"><img src="WC26-Red.png.jpeg" class="product-img" alt="Haiti National Jersey Red"></div>
-                    <div class="product-info"><h3>National Jersey — Red</h3><span class="status-tag">Coming Soon</span></div>
-                </div>
-            </a>
-            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link">
-                <div class="product-card">
-                    <div class="img-container"><img src="Blue-file.png .jpeg" class="product-img" alt="Haiti National Jersey Blue"></div>
-                    <div class="product-info"><h3>National Jersey — Blue</h3><span class="status-tag">Coming Soon</span></div>
-                </div>
-            </a>
-            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link">
-                <div class="product-card">
-                    <div class="img-container"><img src="WC26-white.png .jpeg" class="product-img" alt="Haiti National Jersey White"></div>
-                    <div class="product-info"><h3>National Jersey — White</h3><span class="status-tag">Coming Soon</span></div>
-                </div>
-            </a>
-            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link bottom-row">
-                <div class="product-card">
-                    <div class="img-container"><img src="1974shirt-png.png" class="product-img" alt="1974 Heritage Tee"></div>
-                    <div class="product-info"><h3>1974 Heritage</h3><span class="status-tag">Coming Soon</span></div>
-                </div>
-            </a>
-            <a href="https://www.instagram.com/mdshaiti" target="_blank" class="product-link bottom-row">
-                <div class="product-card">
-                    <div class="img-container"><img src="WC26-cap.png.jpeg" class="product-img" alt="Haitian Federation Cap"></div>
-                    <div class="product-info"><h3>WC26 Cap</h3><span class="status-tag">Coming Soon</span></div>
-                </div>
-            </a>
-        </div>
-    </section>
+<video autoplay muted loop playsinline webkit-playsinline preload="auto">
+<source src="Cinematic_video_focusing_202602011237_ga4dn.mp4" type="video/mp4">
+</video>
 
-    <section id="divisions" class="big-box-section">
-        <span style="color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">Infrastructure</span>
-        <h2 style="font-size: 3.5rem; margin: 15px 0 60px 0;">Strategic Pillars</h2>
-        
-        <div class="divisions-container">
-            <div class="div-item"><h3>Commercial</h3><span class="status-tag">Soon</span></div>
-            <div class="div-item"><h3>Media Hub</h3><span class="status-tag">Soon</span></div>
-            <div class="div-item"><h3>Partnerships</h3><span class="status-tag">Soon</span></div>
-        </div>
-    </section>
+<h1>Welcome to Maison du Sport</h1>
 
-    <section id="hq" style="text-align: center;">
-        <span style="color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">Physical Headquarters</span>
-        <h2 style="font-size: 3.5rem; margin-top: 15px;">MDS Operations</h2>
-        <p style="color: var(--cream-muted); margin-top: 10px; text-transform: uppercase; letter-spacing: 2px;">Port-au-Prince, Haiti</p>
-        
-        <div class="hq-image-wrap">
-            <img src="STOREPNG.png" class="hq-img" id="parallaxHq" alt="MDS Headquarters Store Front">
-            <div class="hq-overlay">
-                <span class="status-tag" style="background: var(--gold); color: var(--bg-primary); padding: 10px 20px;">Opening — Coming Soon</span>
-            </div>
-        </div>
-        
-        <p style="font-size: 1.5rem; font-family: 'Playfair Display', serif; font-style: italic; max-width: 800px; margin: 0 auto;">
-            "The future physical home of Haitian football operations. A center for strategy, commerce, and national pride."
-        </p>
-    </section>
+<button class="enter-btn" onclick="enterMaison()">ENTER THE MAISON</button>
 
-    <footer id="contact">
-        <div class="footer-flex">
-            <div>
-                <h2 class="logo" style="font-size: 3rem;">MDS</h2>
-                <p style="color: var(--cream-muted); margin-top: 1rem; letter-spacing: 1px;">The Strategic Hub of Haitian Football.</p>
-            </div>
-            <div style="text-align: right;">
-                <p style="color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 1.5rem; font-weight: 700;">DIRECT CONTACT</p>
-                <p style="font-size: 1.2rem; margin-bottom: 5px;">+509 4720 9775</p>
-                <p style="color: var(--cream-muted);">contact@maisondusport.com</p>
-                
-                <div class="social-item">
-                    <span class="social-label">INSTAGRAM</span>
-                    <span class="social-handle">@mdshaiti</span>
-                </div>
-                <div class="social-item" style="margin-top: 1rem;">
-                    <span class="social-label">FACEBOOK</span>
-                    <span class="social-handle">Maison Du Sport</span>
-                </div>
-            </div>
-        </div>
-        <div style="margin-top: 6rem; border-top: 1px solid rgba(212, 175, 108, 0.1); padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.6rem; letter-spacing: 4px; opacity: 0.5;">
-            <span>© 2026 MAISON DU SPORT</span>
-            <span>STRUCTURE · LEGACY · AUTHORITY</span>
-        </div>
-    </footer>
+</section>
 
-    <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            const hqImg = document.getElementById('parallaxHq');
-            
-            if (window.scrollY > 100) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-            
-            let scrollPos = window.pageYOffset;
-            let hqOffset = document.getElementById('hq').offsetTop;
-            if (scrollPos > hqOffset - 1000) {
-                let speed = 0.12;
-                hqImg.style.transform = translateY(${(scrollPos - hqOffset) * speed}px);
-            }
-        });
-    </script>
+
+<img src="Maisondusport-file.png" class="logo">
+
+
+<div class="hero-wrapper" id="heroWrapper" style="display:none;">
+
+<div class="hero-section">
+
+<img src="Haiti-file.png.jpeg" class="hero-img" id="heroImg1" style="opacity:1">
+<img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" style="opacity:0">
+
+<div class="hero-text" id="heroText">
+MAISON WHERE FOOTBALL
+</div>
+
+</div>
+</div>
+
+
+<section class="site" id="site">
+
+<div class="notice" id="notice">
+Exclusive Digital Showroom Access
+<span>This space is designed for viewing the Maison collection experience only</span>
+</div>
+
+<div class="section-title">World Cup Special</div>
+
+<div class="products">
+
+<div class="card">
+<span>EXCLUSIVELY ONLINE</span>
+<img src="Old2-file.png.jpeg">
+<h3>1974 Tribute Tee</h3>
+</div>
+
+<div class="card">
+<span>EXCLUSIVELY ONLINE</span>
+<img src="CW-file.png.jpeg">
+<h3>Trainer Tee</h3>
+</div>
+
+<div class="card">
+<span>EXCLUSIVELY ONLINE</span>
+<img src="WW-file.png.jpeg">
+<h3>White Trainer Tee</h3>
+</div>
+
+<div class="card">
+<span>EXCLUSIVELY ONLINE</span>
+<img src="WC-file.png.jpeg">
+<h3>World Cup Tee</h3>
+</div>
+
+</div>
+
+
+<div class="section-title">Maison Philosophy</div>
+
+<div class="philosophy">
+At Maison du Sport, we believe that every great moment on the field begins with vision, discipline, and passion. Our work celebrates not just the game, but the dedication, culture, and spirit that elevate it. Guided by a higher hand, we honor exellence in every stitch, every detail, creating a space where sport meet elegance, and ambition meets purpose. Here talents meets vision, vision meets ambition, and ambition meets the hand of God.
+</div>
+
+
+<div class="section-title">Maison Gallery</div>
+
+<div class="gallery">
+
+<div class="card">
+<span>CONCEPT (COMING SOON)</span>
+<img src="Store-file.png.jpeg">
+<h3>Maison Concept</h3>
+</div>
+
+</div>
+
+
+<div class="section-title">Contact</div>
+
+<div class="contact">
+Email: contactmaisondusport@gmail.com<br>
+Phone: +509 4720 9775
+</div>
+
+</section>
+
+
+
+<div class="modal" id="productModal">
+
+<div class="modal-content">
+
+<div class="close-modal" onclick="closeModal()">✕</div>
+
+<img id="modalImg">
+
+<h2 id="modalTitle"></h2>
+
+<div class="modal-price" id="modalPrice"></div>
+
+<p id="modalDesc"></p>
+
+</div>
+
+</div>
+
+
+<script>
+
+function enterMaison(){
+
+document.body.classList.add("open");
+
+setTimeout(()=>{
+
+document.getElementById("intro").style.display="none";
+
+document.getElementById("heroWrapper").style.display="block";
+
+document.body.style.overflow="auto";
+
+},1200);
+
+}
+
+
+/* HERO SCROLL */
+
+window.addEventListener('scroll',()=>{
+
+if(heroWrapper.style.display!=="block") return;
+
+const p=Math.min(window.scrollY/(window.innerHeight*0.8),1);
+
+heroImg1.style.opacity=1-p;
+
+heroImg2.style.opacity=p;
+
+if(p<.5){
+
+heroText.innerText="MAISON WHERE FOOTBALL";
+
+heroText.style.opacity=1-p*2;
+
+let glow=20+p*30;
+
+heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
+
+}
+
+else{
+
+heroText.innerText="MEETS ELEGANCE";
+
+heroText.style.opacity=(p-0.5)*2;
+
+let glow=50-(p-0.5)*20;
+
+heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
+
+}
+
+if(window.scrollY>window.innerHeight*0.8){
+
+site.classList.add('visible');
+
+notice.classList.add('visible');
+
+}
+
+});
+
+
+/* PRODUCT DATA */
+
+const productData={
+
+"1974 Tribute Tee":{price:"$45",desc:"After the country’s second qualification, this tee pays tribute to Haiti’s first historic World Cup qualification."},
+
+"Trainer Tee":{price:"$40",desc:"Special edition trainer tee made to proudly support the Grenadiers."},
+
+"White Trainer Tee":{price:"$40",desc:"Classic white tee featuring federation emblems to represent national pride."},
+
+"World Cup Tee":{price:"$50",desc:"Tribute shirt inspired by the kit worn during the qualification matches."},
+
+"Maison Concept":{price:"Concept Project",desc:"A future physical Maison du Sport location where visitors will experience the Maison in person."}
+
+};
+
+
+/* MODAL */
+
+document.querySelectorAll('.card').forEach(card=>{
+
+card.addEventListener('click',()=>{
+
+const title=card.querySelector('h3').innerText;
+
+modalImg.src=card.querySelector('img').src;
+
+modalTitle.innerText=title;
+
+modalPrice.innerText=productData[title].price;
+
+modalDesc.innerText=productData[title].desc;
+
+productModal.classList.add('active');
+
+});
+
+});
+
+
+function closeModal(){
+
+productModal.classList.remove('active');
+
+}
+
+productModal.addEventListener('click',e=>{
+
+if(e.target.id==='productModal') closeModal();
+
+});
+
+</script>
+
 </body>
 </html>
-
