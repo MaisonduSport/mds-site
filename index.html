@@ -124,6 +124,17 @@ color:#D4AF37;
 text-shadow:0 0 20px rgba(212,175,55,0.6);
 }
 
+/* Mobile Fixes */
+@media (max-width: 768px) {
+    .hero-img {
+        object-fit: contain;
+        background-color: #0b1a2b;
+    }
+    .hero-text {
+        font-size: 2rem !important;
+    }
+}
+
 
 /* SITE */
 
@@ -515,10 +526,10 @@ heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
 }
 else{
 heroText.innerText="MEETS ELEGANCE";
-heroText.style.color="#0033a0"; 
+heroText.style.color="#D4AF37"; // Changed from royal blue to gold
 heroText.style.opacity=(p-0.5)*2;
 let glow=30;
-heroText.style.textShadow=`0 0 ${glow}px rgba(255,255,255,0.8)`;
+heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.8)`; // Matched shadow color to gold
 }
 
 if(window.scrollY>window.innerHeight*0.8){
