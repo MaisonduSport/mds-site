@@ -119,7 +119,7 @@ font-family:'Playfair Display',serif;
 font-size:3rem;
 text-align:center;
 z-index:2;
-transition:opacity .6s ease,text-shadow .3s ease;
+transition:opacity .6s ease,text-shadow .3s ease, color .3s ease;
 color:#D4AF37;
 text-shadow:0 0 20px rgba(212,175,55,0.6);
 }
@@ -211,7 +211,6 @@ margin-bottom:15px;
 transition:.4s;
 }
 
-/* Matching Bracket Style */
 .card span, .modal-promo-bracket {
 position:absolute;
 top:12px;
@@ -332,7 +331,6 @@ margin-bottom: 25px;
 line-height: 1.6;
 }
 
-/* Inquire Button */
 .inquire-btn {
 display: inline-block;
 padding: 12px 35px;
@@ -390,7 +388,7 @@ to{opacity:1;transform:translateY(0)}
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
 <div class="hero-section">
 <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" style="opacity:1">
-<img src="Gemini_Generated_Image_pdfmk0pdfmk0pdfm.png" id="heroImg2" style="opacity:0">
+<img src="Gemini_Generated_Image_pdfmk0pdfmk0pdfm.png" class="hero-img" id="heroImg2" style="opacity:0">
 <div class="hero-text" id="heroText">
 MAISON WHERE FOOTBALL
 </div>
@@ -404,7 +402,7 @@ Exclusive Digital Showroom Access
 <span>This space is designed for viewing the Maison collection experience only</span>
 </div>
 
-<div class="section-title"> 2026 World cup Collection</div>
+<div class="section-title">2026 World Cup Collection</div>
 
 <div class="products">
 
@@ -461,8 +459,7 @@ At Maison du Sport, we believe that every great moment on the field begins with 
 <div class="section-title">Contact</div>
 
 <div class="contact">
-Email: contactmaisondusport@gmail.com<br>
-
+Email: contactmaisondusport@gmail.com
 </div>
 
 </section>
@@ -470,16 +467,12 @@ Email: contactmaisondusport@gmail.com<br>
 <div class="modal" id="productModal">
 <div class="modal-content">
 <div class="modal-promo-bracket" id="modalPromoBracket" style="display:none;">First 20 for $85</div>
-
 <div class="close-modal" onclick="closeModal()">✕</div>
-
 <img id="modalImg">
 <h2 id="modalTitle"></h2>
 <div class="modal-price" id="modalPrice"></div>
 <p id="modalDesc"></p>
-
 <a href="https://www.instagram.com/mdshaiti" target="_blank" class="inquire-btn">INQUIRE</a>
-
 </div>
 </div>
 
@@ -507,18 +500,22 @@ if(heroWrapper.style.display!=="block") return;
 const p=Math.min(window.scrollY/(window.innerHeight*0.8),1);
 heroImg1.style.opacity=1-p;
 heroImg2.style.opacity=p;
+
 if(p<.5){
 heroText.innerText="MAISON WHERE FOOTBALL";
+heroText.style.color="#D4AF37";
 heroText.style.opacity=1-p*2;
 let glow=20+p*30;
 heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
 }
 else{
 heroText.innerText="MEETS ELEGANCE";
+heroText.style.color="#0033a0"; 
 heroText.style.opacity=(p-0.5)*2;
-let glow=50-(p-0.5)*20;
-heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
+let glow=30;
+heroText.style.textShadow=`0 0 ${glow}px rgba(255,255,255,0.8)`;
 }
+
 if(window.scrollY>window.innerHeight*0.8){
 site.classList.add('visible');
 notice.classList.add('visible');
@@ -527,36 +524,12 @@ notice.classList.add('visible');
 
 /* PRODUCT DATA */
 const productData={
-"Blue Haiti National Shirt":{
-price:"$85",
-desc:"Official  blue Haitian national shirt for the world cup.",
-hasPromo: true
-},
-"Red Haiti National Shirt":{
-price:"$85",
-desc:"Official red Haitian national shirt for the 2026 world cup.",
-hasPromo: true
-},
-"White Haiti National Shirt":{
-price:"$85",
-desc:"Official white Haitian national shirt for the 2026 world cup.",
-hasPromo: true
-},
-"1974 Commemorative Shirt":{
-price:"$75",
-desc:"A commemorative shirt honoring Haiti’s historic 1974 World Cup appearance.",
-hasPromo: false
-},
-"White Haitian Federation Cap":{
-price:"$35",
-desc:"Official Haitian federation white cap representing the national football heritage.",
-hasPromo: false
-},
-"Maison Concept":{
-price:"Concept Project",
-desc:"A future physical Maison du Sport location where visitors will experience the Maison in person.",
-hasPromo: false
-}
+"Blue Haiti National Shirt":{price:"$85",desc:"Official blue Haitian national shirt for the world cup.",hasPromo:true},
+"Red Haiti National Shirt":{price:"$85",desc:"Official red Haitian national shirt for the 2026 world cup.",hasPromo:true},
+"White Haiti National Shirt":{price:"$85",desc:"Official white Haitian national shirt for the 2026 world cup.",hasPromo:true},
+"1974 Commemorative Shirt":{price:"$75",desc:"A commemorative shirt honoring Haiti’s historic 1974 World Cup appearance.",hasPromo:false},
+"White Haitian Federation Cap":{price:"$35",desc:"Official Haitian federation white cap representing the national football heritage.",hasPromo:false},
+"Maison Concept":{price:"Concept Project",desc:"A future physical Maison du Sport location where visitors will experience the Maison in person.",hasPromo:false}
 };
 
 /* MODAL LOGIC */
@@ -571,32 +544,19 @@ document.querySelectorAll('.card').forEach(card=>{
 card.addEventListener('click',()=>{
 const title=card.querySelector('h3').innerText;
 const data = productData[title];
-
 if(!data) return;
-
 modalImg.src=card.querySelector('img').src;
 modalTitle.innerText=title;
 modalPrice.innerText=data.price;
 modalDesc.innerText=data.desc;
-
-// Display "First 20" bracket only for Red, Blue, White shirts
-if(data.hasPromo){
-modalPromoBracket.style.display = "block";
-} else {
-modalPromoBracket.style.display = "none";
-}
-
+if(data.hasPromo) modalPromoBracket.style.display="block";
+else modalPromoBracket.style.display="none";
 productModal.classList.add('active');
 });
 });
 
-function closeModal(){
-productModal.classList.remove('active');
-}
-
-productModal.addEventListener('click',e=>{
-if(e.target.id==='productModal') closeModal();
-});
+function closeModal(){productModal.classList.remove('active');}
+productModal.addEventListener('click',e=>{if(e.target.id==='productModal') closeModal();});
 
 </script>
 
