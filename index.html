@@ -223,6 +223,7 @@ color:#f6f1e8;
 font-family:Montserrat, sans-serif;
 letter-spacing: 1px;
 text-transform: uppercase;
+z-index: 3;
 }
 
 .card:hover{
@@ -326,12 +327,37 @@ margin-bottom:15px;
 opacity:.85;
 }
 
+#modalDesc {
+margin-bottom: 25px;
+line-height: 1.6;
+}
+
+/* Inquire Button */
+.inquire-btn {
+display: inline-block;
+padding: 12px 35px;
+border: 1px solid #D4AF37;
+background: none;
+color: #D4AF37;
+text-decoration: none;
+letter-spacing: 2px;
+font-size: 0.9rem;
+transition: 0.4s;
+cursor: pointer;
+}
+
+.inquire-btn:hover {
+background: #D4AF37;
+color: #800020;
+}
+
 .close-modal{
 position:absolute;
 top:15px;
 right:20px;
 font-size:1.5rem;
 cursor:pointer;
+color: #f6f1e8;
 }
 
 @keyframes fadeUp{
@@ -442,7 +468,6 @@ Phone: +509 4720 9775
 </section>
 
 <div class="modal" id="productModal">
-
 <div class="modal-content">
 <div class="modal-promo-bracket" id="modalPromoBracket" style="display:none;">First 20 for $85</div>
 
@@ -452,6 +477,8 @@ Phone: +509 4720 9775
 <h2 id="modalTitle"></h2>
 <div class="modal-price" id="modalPrice"></div>
 <p id="modalDesc"></p>
+
+<a href="https://www.instagram.com/mdshaiti" target="_blank" class="inquire-btn">INQUIRE</a>
 
 </div>
 </div>
@@ -552,7 +579,7 @@ modalTitle.innerText=title;
 modalPrice.innerText=data.price;
 modalDesc.innerText=data.desc;
 
-// Specific condition: Only show bracket for the 3 National Shirts
+// Display "First 20" bracket only for Red, Blue, White shirts
 if(data.hasPromo){
 modalPromoBracket.style.display = "block";
 } else {
