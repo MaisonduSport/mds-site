@@ -188,20 +188,23 @@ margin-bottom:40px;
 
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:50px;
+grid-template-columns:repeat(auto-fit,minmax(220px,260px));
+gap:30px;
 margin-bottom:120px;
+justify-content: center;
 }
 
 .card{
 background:#a0002b;
-padding:25px;
+padding:20px;
 border-radius:6px;
 text-align:center;
 position:relative;
 transition:.4s;
 color:#f6f1e8;
 cursor:pointer;
+max-width:280px;
+margin:0 auto;
 }
 
 .card img{
@@ -302,21 +305,23 @@ pointer-events:auto;
 }
 
 .modal-content{
-width:90%;
-max-width:900px;
+width: 85%;
+max-width: 600px;
 background:#800020;
-padding:40px;
+padding:30px;
 border-radius:10px;
 text-align:center;
 position:relative;
+max-height: 90vh;
+overflow-y: auto;
 }
 
 .modal-content img{
 width:100%;
-max-height:400px;
-object-fit:cover;
+max-height:250px;
+object-fit:contain;
 border-radius:6px;
-margin-bottom:25px;
+margin-bottom:20px;
 }
 
 .modal-price{
