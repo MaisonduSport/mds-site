@@ -337,7 +337,6 @@ to{opacity:1;transform:translateY(0)}
 </style>
 </head>
 
-
 <body>
 
 <div class="curtain left-curtain"></div>
@@ -355,24 +354,17 @@ to{opacity:1;transform:translateY(0)}
 
 </section>
 
-
 <img src="Maisondusport-file.png" class="logo">
 
-
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
-
 <div class="hero-section">
-
-<img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" style="opacity:1">
+<img src="Haiti-file.png.jpeg" class="hero-img" id="heroImg1" style="opacity:1">
 <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" style="opacity:0">
-
 <div class="hero-text" id="heroText">
 MAISON WHERE FOOTBALL
 </div>
-
 </div>
 </div>
-
 
 <section class="site" id="site">
 
@@ -381,43 +373,47 @@ Exclusive Digital Showroom Access
 <span>This space is designed for viewing the Maison collection experience only</span>
 </div>
 
-<div class="section-title">World Cup Special</div>
+<div class="section-title">Maison National Collection</div>
 
 <div class="products">
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="Old2-file.png.jpeg">
-<h3>1974 Tribute Tee</h3>
+<img src="blue-haiti-shirt.png">
+<h3>Blue Haiti National Shirt</h3>
 </div>
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="CW-file.png.jpeg">
-<h3>Trainer Tee</h3>
+<img src="red-haiti-shirt.png">
+<h3>Red Haiti National Shirt</h3>
 </div>
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="WW-file.png.jpeg">
-<h3>White Trainer Tee</h3>
+<img src="white-haiti-shirt.png">
+<h3>White Haiti National Shirt</h3>
 </div>
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="WC-file.png.jpeg">
-<h3>World Cup Tee</h3>
+<img src="1974-commemorative-shirt.png">
+<h3>1974 Commemorative Shirt</h3>
+</div>
+
+<div class="card">
+<span>EXCLUSIVELY ONLINE</span>
+<img src="haiti-federation-cap.png">
+<h3>White Haitian Federation Cap</h3>
 </div>
 
 </div>
-
 
 <div class="section-title">Maison Philosophy</div>
 
 <div class="philosophy">
 At Maison du Sport, we believe that every great moment on the field begins with vision, discipline, and passion. Our work celebrates not just the game, but the dedication, culture, and spirit that elevate it. Guided by a higher hand, we honor exellence in every stitch, every detail, creating a space where sport meet elegance, and ambition meets purpose. Here talents meets vision, vision meets ambition, and ambition meets the hand of God.
 </div>
-
 
 <div class="section-title">Maison Gallery</div>
 
@@ -431,7 +427,6 @@ At Maison du Sport, we believe that every great moment on the field begins with 
 
 </div>
 
-
 <div class="section-title">Contact</div>
 
 <div class="contact">
@@ -441,8 +436,6 @@ Phone: +509 4720 9775
 
 </section>
 
-
-
 <div class="modal" id="productModal">
 
 <div class="modal-content">
@@ -450,134 +443,94 @@ Phone: +509 4720 9775
 <div class="close-modal" onclick="closeModal()">✕</div>
 
 <img id="modalImg">
-
 <h2 id="modalTitle"></h2>
-
 <div class="modal-price" id="modalPrice"></div>
-
 <p id="modalDesc"></p>
 
 </div>
-
 </div>
-
 
 <script>
 
 function enterMaison(){
-
 document.body.classList.add("open");
-
 setTimeout(()=>{
-
 document.getElementById("intro").style.display="none";
-
 document.getElementById("heroWrapper").style.display="block";
-
 document.body.style.overflow="auto";
-
 },1200);
-
 }
-
 
 /* HERO SCROLL */
-
 window.addEventListener('scroll',()=>{
-
 if(heroWrapper.style.display!=="block") return;
-
 const p=Math.min(window.scrollY/(window.innerHeight*0.8),1);
-
 heroImg1.style.opacity=1-p;
-
 heroImg2.style.opacity=p;
-
 if(p<.5){
-
 heroText.innerText="MAISON WHERE FOOTBALL";
-
 heroText.style.opacity=1-p*2;
-
 let glow=20+p*30;
-
 heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
-
 }
-
 else{
-
 heroText.innerText="MEETS ELEGANCE";
-
 heroText.style.opacity=(p-0.5)*2;
-
 let glow=50-(p-0.5)*20;
-
 heroText.style.textShadow=`0 0 ${glow}px rgba(212,175,55,0.7)`;
-
 }
-
 if(window.scrollY>window.innerHeight*0.8){
-
 site.classList.add('visible');
-
 notice.classList.add('visible');
-
 }
-
 });
-
 
 /* PRODUCT DATA */
-
 const productData={
-
-"1974 Tribute Tee":{price:"$45",desc:"After the country’s second qualification, this tee pays tribute to Haiti’s first historic World Cup qualification."},
-
-"Trainer Tee":{price:"$40",desc:"Special edition trainer tee made to proudly support the Grenadiers."},
-
-"White Trainer Tee":{price:"$40",desc:"Classic white tee featuring federation emblems to represent national pride."},
-
-"World Cup Tee":{price:"$50",desc:"Tribute shirt inspired by the kit worn during the qualification matches."},
-
-"Maison Concept":{price:"Concept Project",desc:"A future physical Maison du Sport location where visitors will experience the Maison in person."}
-
+"Blue Haiti National Shirt":{
+price:"$85",
+desc:"Official Maison du Sport blue Haiti national shirt. First 20 shirts sold for $85."
+},
+"Red Haiti National Shirt":{
+price:"$85",
+desc:"Official Maison du Sport red Haiti national shirt. First 20 shirts sold for $85."
+},
+"White Haiti National Shirt":{
+price:"$85",
+desc:"Official Maison du Sport white Haiti national shirt. First 20 shirts sold for $85."
+},
+"1974 Commemorative Shirt":{
+price:"$75",
+desc:"A commemorative shirt honoring Haiti’s historic 1974 World Cup appearance."
+},
+"White Haitian Federation Cap":{
+price:"$35",
+desc:"Official Haitian federation white cap representing the national football heritage."
+},
+"Maison Concept":{
+price:"Concept Project",
+desc:"A future physical Maison du Sport location where visitors will experience the Maison in person."
+}
 };
 
-
 /* MODAL */
-
 document.querySelectorAll('.card').forEach(card=>{
-
 card.addEventListener('click',()=>{
-
 const title=card.querySelector('h3').innerText;
-
 modalImg.src=card.querySelector('img').src;
-
 modalTitle.innerText=title;
-
 modalPrice.innerText=productData[title].price;
-
 modalDesc.innerText=productData[title].desc;
-
 productModal.classList.add('active');
-
 });
-
 });
-
 
 function closeModal(){
-
 productModal.classList.remove('active');
-
 }
 
 productModal.addEventListener('click',e=>{
-
 if(e.target.id==='productModal') closeModal();
-
 });
 
 </script>
