@@ -124,6 +124,17 @@ color:#D4AF37;
 text-shadow:0 0 20px rgba(212,175,55,0.6);
 }
 
+/* Mobile Fixes */
+@media (max-width: 768px) {
+    .hero-img {
+        object-fit: contain;
+        background-color: #0b1a2b;
+    }
+    .hero-text {
+        font-size: 2rem !important;
+    }
+}
+
 
 /* SITE */
 
@@ -393,7 +404,7 @@ to{opacity:1;transform:translateY(0)}
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
 <div class="hero-section">
 <img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" style="opacity:1">
-<img src="Gemini_Generated_Image_ciiw2mciiw2mciiw.png" style="opacity:0">
+<img src="Gemini_Generated_Image_ciiw2mciiw2mciiw.png" class="hero-img" id="heroImg2" style="opacity:0">
 <div class="hero-text" id="heroText">
 MAISON WHERE FOOTBALL
 </div>
