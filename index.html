@@ -211,13 +211,18 @@ margin-bottom:15px;
 transition:.4s;
 }
 
-.card span{
+/* Matching Bracket Style */
+.card span, .modal-promo-bracket {
 position:absolute;
 top:12px;
 left:12px;
 font-size:.65rem;
 background:#5a0015;
 padding:4px 8px;
+color:#f6f1e8;
+font-family:Montserrat, sans-serif;
+letter-spacing: 1px;
+text-transform: uppercase;
 }
 
 .card:hover{
@@ -358,7 +363,7 @@ to{opacity:1;transform:translateY(0)}
 
 <div class="hero-wrapper" id="heroWrapper" style="display:none;">
 <div class="hero-section">
-<img src="Haiti-file.png .jpeg" class="hero-img" id="heroImg1" style="opacity:1">
+<img src="Haiti-file.png.jpeg" class="hero-img" id="heroImg1" style="opacity:1">
 <img src="Old-file.png.jpeg" class="hero-img" id="heroImg2" style="opacity:0">
 <div class="hero-text" id="heroText">
 MAISON WHERE FOOTBALL
@@ -385,25 +390,25 @@ Exclusive Digital Showroom Access
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="WC26-Red.png.jpeg">
+<img src="red-haiti-shirt.png">
 <h3>Red Haiti National Shirt</h3>
 </div>
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="WC26-white.png .jpeg">
+<img src="white-haiti-shirt.png">
 <h3>White Haiti National Shirt</h3>
 </div>
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="1974shirt-png.png">
+<img src="1974-commemorative-shirt.png">
 <h3>1974 Commemorative Shirt</h3>
 </div>
 
 <div class="card">
 <span>EXCLUSIVELY ONLINE</span>
-<img src="Haiticap-png.png">
+<img src="haiti-federation-cap.png">
 <h3>White Haitian Federation Cap</h3>
 </div>
 
@@ -412,7 +417,7 @@ Exclusive Digital Showroom Access
 <div class="section-title">Maison Philosophy</div>
 
 <div class="philosophy">
-At Maison du Sport, we believe that every great moment on the field begins with vision, discipline, and passion. Our work celebrates not just the game, but the dedication, culture, and spirit that elevate it. Guided by a higher hand, we honor exellence in every stitch, every detail, creating a space where sport meet elegance, and ambition meets purpose. Here talents meets vision, vision meets ambition, and ambition meets the hand of God.
+At Maison du Sport, we believe that every great moment on the field begins with vision, discipline, and passion. Our work celebrates not just the game, but the dedication, culture, and spirit that elevate it. Guided by a higher hand, we honor excellence in every stitch, every detail, creating a space where sport meets elegance, and ambition meets purpose. Here talent meets vision, vision meets ambition, and ambition meets the hand of God.
 </div>
 
 <div class="section-title">Maison Gallery</div>
@@ -431,6 +436,7 @@ At Maison du Sport, we believe that every great moment on the field begins with 
 
 <div class="contact">
 Email: contactmaisondusport@gmail.com<br>
+Phone: +509 4720 9775
 </div>
 
 </section>
@@ -438,6 +444,7 @@ Email: contactmaisondusport@gmail.com<br>
 <div class="modal" id="productModal">
 
 <div class="modal-content">
+<div class="modal-promo-bracket" id="modalPromoBracket" style="display:none;">First 20 for $85</div>
 
 <div class="close-modal" onclick="closeModal()">✕</div>
 
@@ -461,6 +468,13 @@ document.body.style.overflow="auto";
 }
 
 /* HERO SCROLL */
+const heroWrapper = document.getElementById('heroWrapper');
+const heroImg1 = document.getElementById('heroImg1');
+const heroImg2 = document.getElementById('heroImg2');
+const heroText = document.getElementById('heroText');
+const site = document.getElementById('site');
+const notice = document.getElementById('notice');
+
 window.addEventListener('scroll',()=>{
 if(heroWrapper.style.display!=="block") return;
 const p=Math.min(window.scrollY/(window.innerHeight*0.8),1);
@@ -488,38 +502,63 @@ notice.classList.add('visible');
 const productData={
 "Blue Haiti National Shirt":{
 price:"$85",
-desc:"Official Maison du Sport blue Haiti national shirt. First 20 shirts sold for $85."
+desc:"Official Maison du Sport blue Haiti national shirt. First 20 shirts sold for $85.",
+hasPromo: true
 },
 "Red Haiti National Shirt":{
 price:"$85",
-desc:"Official Maison du Sport red Haiti national shirt. First 20 shirts sold for $85."
+desc:"Official Maison du Sport red Haiti national shirt. First 20 shirts sold for $85.",
+hasPromo: true
 },
 "White Haiti National Shirt":{
 price:"$85",
-desc:"Official Maison du Sport white Haiti national shirt. First 20 shirts sold for $85."
+desc:"Official Maison du Sport white Haiti national shirt. First 20 shirts sold for $85.",
+hasPromo: true
 },
 "1974 Commemorative Shirt":{
 price:"$75",
-desc:"A commemorative shirt honoring Haiti’s historic 1974 World Cup appearance."
+desc:"A commemorative shirt honoring Haiti’s historic 1974 World Cup appearance.",
+hasPromo: false
 },
 "White Haitian Federation Cap":{
 price:"$35",
-desc:"Official Haitian federation white cap representing the national football heritage."
+desc:"Official Haitian federation white cap representing the national football heritage.",
+hasPromo: false
 },
 "Maison Concept":{
 price:"Concept Project",
-desc:"A future physical Maison du Sport location where visitors will experience the Maison in person."
+desc:"A future physical Maison du Sport location where visitors will experience the Maison in person.",
+hasPromo: false
 }
 };
 
-/* MODAL */
+/* MODAL LOGIC */
+const productModal = document.getElementById('productModal');
+const modalImg = document.getElementById('modalImg');
+const modalTitle = document.getElementById('modalTitle');
+const modalPrice = document.getElementById('modalPrice');
+const modalDesc = document.getElementById('modalDesc');
+const modalPromoBracket = document.getElementById('modalPromoBracket');
+
 document.querySelectorAll('.card').forEach(card=>{
 card.addEventListener('click',()=>{
 const title=card.querySelector('h3').innerText;
+const data = productData[title];
+
+if(!data) return;
+
 modalImg.src=card.querySelector('img').src;
 modalTitle.innerText=title;
-modalPrice.innerText=productData[title].price;
-modalDesc.innerText=productData[title].desc;
+modalPrice.innerText=data.price;
+modalDesc.innerText=data.desc;
+
+// Specific condition: Only show bracket for the 3 National Shirts
+if(data.hasPromo){
+modalPromoBracket.style.display = "block";
+} else {
+modalPromoBracket.style.display = "none";
+}
+
 productModal.classList.add('active');
 });
 });
